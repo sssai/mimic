@@ -150,6 +150,7 @@ export default {
     setTimeout(this.drawLine, 1000);
   },
   methods: {
+    // 获取页面更新所需的数据
     async updateSummary() {
       await this.$store.dispatch('getmdfsstate', {}).catch((e) => {
         if (this.$store.getters.getInSummary) {
@@ -173,24 +174,22 @@ export default {
           });
         }
       });
-      /*console.log("【this.$store.getters.getInSummary】" + this.$store.getters.getInSummary);*/
-      /*console.log("【this.isInSummary】" + this.isInSummary);*/
       // 递归调度，自动从后台获取overview对象，用于更新数据
       if (this.$store.getters.getInSummary) {
         setTimeout(this.updateSummary, 4000);
       }
+      // 隐藏页面加载效果
       this.loading = false
     },
+    // 绘制上下行速度图表的方法
     drawLine() {
+      // 如果期间获取到的上下行元素为空会抛出异常
       try {
-        // 基于准备好的dom，初始化echarts实例
+        // 获取上行速度的页面元素
         let upRateChart = echarts.init(this.$refs.upRateChart)
+        // 获取下行速度的页面元素
         let downRateChart = echarts.init(this.$refs.downRateChart)
-        upRateChart.showLoading();
-        downRateChart.showLoading();
-        console.log("upRateChart", upRateChart);
-        console.log("downRateChart", downRateChart);
-        // 绘制图表
+        // 设置上行速度图表的参数，并绘制
         upRateChart.setOption({
           animation: false,
           title: {
@@ -255,6 +254,7 @@ export default {
             areaStyle: {}
           }]
         });
+        // 设置下行速度图表的参数，并绘制
         downRateChart.setOption({
           animation: false,
           title: {
@@ -326,17 +326,14 @@ export default {
             }
           }]
         });
-        upRateChart.hideLoading();
-        downRateChart.hideLoading();
-        console.log("upRateChart.getOption()", upRateChart.getOption());
-        // 随屏幕大小改变大小
+        // 此方法让两个随屏幕大小改变大小
         window.onresize = function() {
           upRateChart.resize()
           downRateChart.resize()
         };
       } catch (e) {
-        setTimeout(
-          this.drawLine, 1000);
+        // 元素为空时捕获异常，重新执行图表绘制的方法
+        this.drawLine()
       }
     },
     changeTabelHeigth() {
