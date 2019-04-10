@@ -18,13 +18,13 @@
     </el-submenu>
 
     <!-- 云平台版本暂时不需要，先隐藏该路径 -->
-    <!-- <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
+    <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
       <template slot='title'>
         <i class="el-icon-setting"></i>
         <span>配置管理</span>
       </template>
-      <el-menu-item :index="filesystem" v-if="getPermissionTree.fs_manage">文件系统配置</el-menu-item> -->
-    <!-- <el-menu-item :index="mountnode">挂载节点配置</el-menu-item> -->
+      <el-menu-item :index="filesystem" v-if="getPermissionTree.fs_manage">文件系统配置</el-menu-item>
+ <!--    <el-menu-item :index="mountnode">挂载节点配置</el-menu-item> -->
     <el-menu-item :index="cert" v-if="getPermissionTree.global_cert_manage">全局证书配置</el-menu-item>
       <el-menu-item :index="globalpara" v-if="getPermissionTree.global_param_manage">全局参数配置</el-menu-item>
       <el-menu-item :index="systemstructure" v-if="getPermissionTree.system_func_structure">系统功能结构</el-menu-item>
