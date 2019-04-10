@@ -44,7 +44,7 @@ export async function getMdfsStateData() {
           "mdfsStatus": "0", //运行状态(是否正常运行) "0"表示正常运行，"1"表示运行异常
           "mdfsStorage": 192000, //存储容量
           "mdfsAvailable": 185451, //可用容量
-          "mdfsMntPath": "/mnt/mdfs", //挂载路径
+          "mdfsMntPath": "/mnt/ceph", //挂载路径
           "upLinkSpeed|0-19999.2": 1.00, //实时上行速率，单位为k/s
           "downLinkSpeed|0-19999.2": 1.00, //实时下行速率，单位为k/s
         }
@@ -97,14 +97,14 @@ export async function getBottomFsStateData() {
           "fsStorage": 192000, //存储容量
           "fsAvailable": 185451, //可用容量
           "fsType": 'ext4',
-          "fsMntPath": "/mnt/mdfs", //挂载路径
+          "fsMntPath": "/mnt/mdfs1", //挂载路径
         }, {
           "bottomFsId|+1": 1,
           "fsStatus|0-1": 0, //运行状态(是否正常运行) "0"表示正常运行，"1"表示运行异常
           "fsStorage": 192000, //存储容量
           "fsAvailable": 185451, //可用容量
           "fsType": 'ext4',
-          "fsMntPath": "/mnt/mdfs", //挂载路径
+          "fsMntPath": "/mnt/mdfs2", //挂载路径
         }]
       })
     } else {

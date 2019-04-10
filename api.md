@@ -923,12 +923,19 @@ resp{
 *************************云平台版本********************************
 //MDFS状态监控
 req{
-	“type”:20（int型）
+       “type”:20（int型）
 }
 resp{
-	“type”:20（int型）
-	“state”:”” String型
-	“errorMessage”:”” String型
+       “type”:20（int型）
+       “state”:”” String型
+       “errorMessage”:”” String型
+       “mdfsInfo”: {
+       “mdfsStatus”:“”     String型        //运行状态(0表示正常运行，1表示运行异常，若为1，此时所有的mdfsinfo数据为异常前最新的一次数据)
+       “mdfsStorage”:double型           //存储容量
+       “mdfsAvailable”: double型         //可用容量
+       “mdfsMntPath”:    “”String型     //挂载路径
+       “upLinkSpeed”:1 long型               //实时上行速率，单位为k/s
+       “downLinkSpeed”:1 long型           //实时下行速率，单位为k/s
 }
 
 //底层文件系统状态监控
