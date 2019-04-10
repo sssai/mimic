@@ -83,6 +83,20 @@
 
   </el-table>
 
+    <el-row type="flex" class="row-bg" justify="center">
+      <el-col style="width:200px;">
+        <div class="divide">
+          <el-pagination
+            background
+            layout="total, prev, pager, next"
+            :page-size="pageSize"
+            :total="total"
+            :current-page="currentPage"
+            @current-change="handleCurrentChange">
+          </el-pagination>
+        </div>
+      </el-col>
+    </el-row>
 
       </div>
   </el-col>
@@ -119,6 +133,9 @@ export default {
         timer:null,
       	      	//表内数据
         tableData1: [], //
+        total:0,
+        currentPage:1,
+        pageSize:20,
 
         time_error:'',
         exStaticsHour:'',
@@ -174,25 +191,49 @@ export default {
 methods: {
      // 将更新整个页面的功能抽离成一个公共函数
     async updatePage(){
- 		let tableData = await errormessage.GetRecentError()
-    //console.log('hhhhhh',tableData)
+
+      //表单信息获取
+ 		    let tableData = await errormessage.GetRecentError()
+        this.pageSize= 20
+        this.total=20
         this.tableData1 = tableData.exInfo
-        //this.exStatics= tableData.exStatics
+        
+        //统计信息获取
         this.exStaticsHour = tableData.exStaticsHour
-       this.exStaticsDay= tableData.exStaticsDay
+        this.exStaticsDay= tableData.exStaticsDay
 
     },
+    async handleCurrentChange(val){
 
+        this.currentPage= val
+        this.pageSize= 10
+
+        let startTime = this.timevalue[0] + ' 00:00:00'
+        let endTime = this.timevalue[1] +' 23:59:59'
+        let tableData= await errormessage.GetErrorByTime(startTime,endTime,this.pageSize,this.currentPage)
+        this.tableData1 = tableData.exInfo
+        this.currentPage= +tableData.currentPage
+        this.total= +tableData.total
+
+        //统计信息获取
+        this.exStaticsHour = tableData.exStaticsHour
+        this.exStaticsDay= tableData.exStaticsDay
+
+    
+    },
     async geterrorInfo(){
-      console.log(this.timevalue[0])
+      //console.log(this.timevalue[0])
       let startTime = this.timevalue[0] + ' 00:00:00'
       let endTime = this.timevalue[1] +' 23:59:59'
-      let tableData= await errormessage.GetErrorByTime(startTime,endTime)
+      this.pageSize= 10
+      let tableData= await errormessage.GetErrorByTime(startTime,endTime,this.pageSize,this.currentPage)
       this.tableData1 = tableData.exInfo
+      this.currentPage= +tableData.currentPage
+      this.total= +tableData.total
+
+      //统计信息获取
       this.exStaticsHour = tableData.exStaticsHour
       this.exStaticsDay= tableData.exStaticsDay
-
-
     }
 
 

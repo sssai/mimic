@@ -6,6 +6,7 @@
     </h1>
   </el-header>
   <el-main id="main">
+
     <el-row class="monitor_row">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
@@ -68,6 +69,8 @@
       </el-card>
     </el-row>
     <el-row class="monitor_row">
+
+      
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span><strong>底层文件系统状态监控</strong></span>
