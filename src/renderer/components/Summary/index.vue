@@ -5,101 +5,38 @@
       <el-breadcrumb separator="/">概览</el-breadcrumb>
     </h1>
   </el-header>
-  <el-main id="main">
-
-    <el-row class="monitor_row">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span><strong>MDFS状态监控</strong></span>
-        </div>
-        <el-row class="mdfs_monitor_row">
-          <el-col :span="6" class="mdfs_left_col">
-            <el-row class="mycard text item card_beauty">
-              <el-col :span="12">
-                MDFS状态
-              </el-col>
-              <el-col :span="12">
-                <div v-if='getMdfsState.state == "0"' style="color:green;
-              display: flex;
-              align-items: center;
-              justify-content: center;">
-                  <i class="el-icon-check"></i>
-                  <strong>正常</strong>
-                </div>
-                <div v-else style="color:red;
-              display: flex;
-              align-items: center;
-              justify-content: center;">
-                  <i class="el-icon-close"></i>
-                  异常
-                </div>
-              </el-col>
-            </el-row>
-            <el-row class="mdfs_state_panl card_beauty">
-              MDFS总容量
-              <el-row style="height:25px;font-size:30px;font-family:'微软雅黑';margin-top:10px;
-              display: flex;
-              align-items: center;
-              justify-content: center;">{{ formateMdfsStorage || 0}}G</el-row>
-            </el-row>
-            <el-row class="card_beauty mdfs_state_panl">
-              MDFS可用容量
-              <el-row style="height:25px;font-size:30px;font-family:'微软雅黑';margin-top:10px;
-              display: flex;
-              align-items: center;
-              justify-content: center;">{{ formateMdfsAvailable || 0}}G</el-row>
-            </el-row>
-          </el-col>
-          <el-col :span="18" class="mdfs_rigth_col text">
-            <el-row class="mycard card_beauty">当前MDFS挂载路径：<strong>{{getMdfsState.mdfsInfo.mdfsMntPath}}</strong></el-row>
-            <el-row class="text item">
-              <el-col :span="12">
-                <div id="upRateChart" ref="upRateChart" class="rate_panl card_beauty">
-                  加载中...
-                </div>
-              </el-col>
-              <el-col :span="12">
-                <div id="downRateChart" ref="downRateChart" class="rate_panl card_beauty">
-                  加载中...
-                </div>
-              </el-col>
-            </el-row>
-          </el-col>
-        </el-row>
-      </el-card>
-    </el-row>
-    <el-row class="monitor_row">
-
-      
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span><strong>底层文件系统状态监控</strong></span>
-        </div>
-        <el-row id="fstable_row">
-          <el-table :data="bottomfsStateList" height="250" border style="width: 100%">
-            <el-table-column prop="bottomFsId" label="文件系统id" width="110">
-            </el-table-column>
-            <el-table-column prop="fsStorage" label="存储容量" width="150">
-            </el-table-column>
-            <el-table-column prop="fsAvailable" label="可用容量" width="150">
-            </el-table-column>
-            <el-table-column prop="fsType" label="文件系统类型" width="150">
-            </el-table-column>
-            <el-table-column prop="fsMntPath" label="挂载路径">
-            </el-table-column>
-            <el-table-column prop="fsStatus" label="运行状态" width="80">
-            </el-table-column>
-          </el-table>
-        </el-row>
-        <el-row style="text-align:center">
-          <div style="margin:5px">
-            <el-button plain v-if="!openTable" size="mini" @click="changeTabelHeigth()"><i class="el-icon-caret-bottom"></i>展开表格</el-button>
-            <el-button plain v-else size="mini" @click="changeTabelHeigth()"><i class="el-icon-caret-top"></i>收回表格</el-button>
+  <el-main id="main" class='fullScreen'>
+    <el-row :gutter="20" class='fullScreen'>
+      <!-- <el-col :span="16" class='fullScreen'>
+        <el-row :gutter="20" class='fullScreen'> -->
+          <div style="height:50%">
+            <el-col :span="12" class='fullScreen'>
+              <fs-state style="height:45%" />
+              <div class="" style="height:5%"></div>
+              <mounter-state style="height:45%" />
+              <div class="" style="height:5%"></div>
+            </el-col>
+            <el-col :span="12" class='fullScreen'>
+              <keep-alive>
+                <space-used style="height:95%" />
+              </keep-alive>
+              <div class="" style="height:5%"></div>
+            </el-col>
           </div>
-          <!-- <el-pagination background layout="prev, pager, next" :total="1000">
-          </el-pagination> -->
-        </el-row>
-      </el-card>
+          <div style="height:50%;">
+            <el-col :span="16" class='fullScreen'>
+              <safe-state class='fullScreen' />
+            </el-col>
+            <el-col :span="8" class='fullScreen'>
+              <users-state class='fullScreen' />
+            </el-col>
+          </div>
+        <!-- </el-row>
+      </el-col>
+      <el-col :span="8" class='fullScreen'>
+        <fs-logs class='fullScreen' />
+      </el-col> -->
+
     </el-row>
   </el-main>
   <foot></foot>

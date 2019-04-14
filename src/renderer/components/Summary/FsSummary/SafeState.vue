@@ -1,6 +1,6 @@
-<template>
+<template id="">
 <div class="" style="height:100%;width:100%">
-  <el-row style="height:20%;width:100%;">
+  <el-row style="height:20%">
     <el-col :span="24" style="height:100%">
       <div class="center safeStateTitle" v-show='fsIsErr'>
         文件系统　
@@ -109,7 +109,7 @@ export default {
      goToDetail() {
          this.$router.push({ path: '/content/auth/errorfs'})
 
-    }
+    }   
   }
 }
 </script>
