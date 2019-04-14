@@ -20,7 +20,7 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "mimic",
+    "productName": "拟态分布式存储系统",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"

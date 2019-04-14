@@ -73,7 +73,7 @@ export default{
 }
 .usersStateDetailTitle {
   font-size: 14px;
-  padding: 10px 0px 10px 20px;
+  padding: 5px 0px 5px 10px;
 }
 .usersStateDetail {
   font-size: 30px;

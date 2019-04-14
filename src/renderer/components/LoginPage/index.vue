@@ -2,12 +2,12 @@
 <el-row type="flex" align="middle" style="height:500px">
   <el-col style="height:200px;">
     <el-row type="flex" justify="center">
-      <el-col style="width:400px;height:200px;">
+      <el-col style="width:400px;height:350px;">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>拟态存储系统管理控制台</span>
           </div>
-          <el-col style="width:400px;height:300px;">
+          <el-col style="width:400px;height:350px;">
             <el-form status-icon label-width="60px" ref="userform" :model="userform" :rules="userrule">
             <el-form-item>
             </el-form-item>
@@ -29,7 +29,6 @@
             </el-form>
           </el-col>
         </el-card>
-
       </el-col>
     </el-row>
   </el-col>
