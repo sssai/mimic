@@ -64,3 +64,9 @@ export const GET_FS_SAFE_REPORT_FORMAT = "GET_FS_SAFE_REPORT_FORMAT"
 
 // 获取系统安全报表数据
 export const GET_FS_SAFR_REPORT_INFO = "GET_FS_SAFR_REPORT_INFO"
+
+// 获取MDFS系统状态
+export const GET_MDFS_STATE = "GET_MDFS_STATE"
+
+// 获取底层文件系统状态
+export const GET_BOTTOM_FS_STATE = "GET_BOTTOM_FS_STATE"

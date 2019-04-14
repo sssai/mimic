@@ -30,6 +30,8 @@ export default {
   },
   watch: {
     '$route': function(route) {
+      // console.log("router"+router.fullPath)
+      console.log("route.fullPath ："+route.fullPath );
       if (route.fullPath != global_.SUMMARY) {
         this.$store.commit('UPDATE_USER_IN_SUMMARY', false)
       } else {

@@ -10,6 +10,9 @@ export const LOCAL_TEST = true
 //  ├─reportForm.js
 //  │   └─GetFSSafeReport(payload)
 //  ├─socket.js
+//  ├─summary.js
+//  │   ├─GetMDFsStateSummary()
+//  │   └─GetBottomFsStateSummary()
 //  └─user.js
 //    ├─CheckUser(username, password)
 //    ├─ GetPermissionTree(param)
@@ -51,11 +54,17 @@ export const MANAGE_USER = 18
 // GET_USER_NODE 获取user信息，测试通过
 export const GET_USER_NODE = 19
 
+// MDFS状态监控
+export const GET_MDFS_STATE = 20
+
+// 底层文件系统监控
+export const GET_BOTTOM_FS_STATE = 21
+
 // FS_ADD 新增文件系统，测试通过
-export const FS_ADD = 20
+// export const FS_ADD = 20
 
 // 文件系统监控界面 获取视图数据，测试通过
-export const MONITOR_FS = 22
+// export const MONITOR_FS = 22
 
 // 修改密码第一步获取验证码，测试通过
 export const GET_CAPTCHA = 23
@@ -188,9 +197,19 @@ export const GET_AC_REPORT = 75
 
 
 
-/*****************************未实现的接口***********************************************/
 
 /*****************************取消实现的接口***********************************************/
 
 // MOUNT_ADD 新增挂载节点，这个已经取消
 export const MOUNT_ADD = 111
+
+
+/*****************************MDFS接口***********************************************/
+//查询最新的20条异常信息
+export const RECENT_ERROR_MESSAGE=22
+//按时间查询异常信息
+export const ERROR_MESSAGE_BY_TIME=23
+//查询最新的20条日志信息
+export const RECENT_LOG=24
+//按时间查询日志信息
+export const GRT_LOG_BY_TIME=25
