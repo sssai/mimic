@@ -7,17 +7,17 @@ const app = require('electron').remote.app
 let configPath = app.getPath('userData') + '\\serverConfig.json'
 const fs = require('fs')
 let configObj
-console.log("【本地测试】" + type.LOCAL_TEST);
-// if (type.LOCAL_TEST) {
-//   configObj = {
-//     host: '0.0.0.0',
-//     hostBackup: '0.0.0.0'
-//   }
-// } else {
-configObj = {
-  hostBackup: '219.223.197.76', //'219.223.197.76'(haiyang),219.223.195.100(yuan),219.223.193.22(test),219.223.197.89
-  host: '219.223.197.76'
-  /*host:'0.0.0.0',
+console.log("【本地测试】"+type.LOCAL_TEST);
+if (type.LOCAL_TEST) {
+  configObj = {
+    host: '0.0.0.0',
+    hostBackup: '0.0.0.0'
+  }
+} else {
+  configObj = {
+    hostBackup: '219.223.197.76', //'219.223.197.76'(haiyang),219.223.193.99(yuan),219.223.193.22(test),219.223.197.89
+    host: '219.223.197.127'
+    /*host:'0.0.0.0',
  			hostBackup:'0.0.0.0'*/
 }
 // }

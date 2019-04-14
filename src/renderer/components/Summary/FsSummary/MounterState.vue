@@ -1,11 +1,11 @@
 <template id="">
 <div style="height:100%">
-  <el-row style="height:20%">
+  <el-row style="height:30%;padding-bottom:0px">
     <el-col :span="24" style="height:100%">
       <div class="fsStateTitle">挂载节点</div>
     </el-col>
   </el-row>
-  <el-row style="height:80%">
+  <el-row style="height:80%;padding-top:0px">
     <el-col class="center" :span="8" style="height:100%">
       <div class="mouterSumTitle">总数量</div>
       <div class="mouterSum">{{mountersum}}</div>

@@ -1,6 +1,6 @@
 <template>
   <div class="usersState">
-      <el-row style="height:20%">
+      <el-row style="height:20%;padding:0px">
         <el-col :span="24" class="usersStateTitle" style="height:100%" >
           <div class="center">用户情况</div>
         </el-col>

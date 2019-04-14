@@ -8,9 +8,9 @@
       <el-tab-pane label="异常总数量">
         <fs-safe></fs-safe>
       </el-tab-pane>
-      <el-tab-pane label="异常数量占比（开发中）" disabled>异常数量占比</el-tab-pane>
+      <!-- <el-tab-pane label="异常数量占比（开发中）" disabled>异常数量占比</el-tab-pane>
       <el-tab-pane label="异常类型出现数量（开发中）" disabled>异常类型出现数量</el-tab-pane>
-      <el-tab-pane label="异常类型出现数量（开发中）" disabled>异常类型出现数量</el-tab-pane>
+      <el-tab-pane label="异常类型出现数量（开发中）" disabled>异常类型出现数量</el-tab-pane> -->
     </el-tabs>
   </el-main>
   <foot></foot>

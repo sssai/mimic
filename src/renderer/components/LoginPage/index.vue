@@ -3,7 +3,7 @@
   <el-col style="height:200px;">
     <el-row type="flex" justify="center">
       <el-col style="width:400px;height:350px;">
-        <el-card class="box-card">
+        <el-card class="">
           <div slot="header" class="clearfix">
             <span>拟态存储系统管理控制台（云平台版）</span>
           </div>

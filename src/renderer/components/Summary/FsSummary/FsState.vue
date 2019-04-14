@@ -1,11 +1,11 @@
 <template>
 <div style="height:100%">
-  <el-row style="height:20%">
+  <el-row style="height:30%;padding-bottom:0px">
     <el-col :span="24" style="height:100%">
       <div class="center fsStateTitle ">文件系统</div>
     </el-col>
   </el-row>
-  <el-row style="height:80%">
+  <el-row style="height:80%;padding-top:0px">
     <el-col class="center" :span="8" style="height:100%">
       <div class="center fsSumTitle">总数量</div>
       <div class="fsSum">{{ fssum }}</div>

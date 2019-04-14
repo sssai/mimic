@@ -13,9 +13,8 @@
               <!-- <span style="cursor:pointer;" @click="resetPwd()">忘记密码？</span> -->
             </el-form-item>
             <el-form-item>
-              <el-button  style="width:280px" type="primary" @click="submitForm('userform')" @keyup.enter="submitForm('userform')">登录</el-button>
+              <el-button  style="width:280px" type="primary" @click="submitForm('userform')" @keyup.enter="submitForm('userform')">解锁</el-button>
             </el-form-item>
-            <el-button type='text' size='small' @click="resetPwd()">忘记密码？</el-button>
           </el-form>
         </el-col>
       </el-card>
