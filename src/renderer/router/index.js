@@ -38,6 +38,9 @@ import ErrorFileManage from '@/components/AuthManagePage/ErrorFileManage'
 import DownloadErrorFile from '@/components/AuthManagePage/DownloadErrorFile'
 import ErrorFS from '@/components/AuthManagePage/ErrorFS'
 import ErrorNotify from '@/components/AuthManagePage/ErrorNotify'
+import ErrorMessage from '@/components/AuthManagePage/ErrorMessage'
+import SystemLog from '@/components/AuthManagePage/SystemLog'
+
 
 import UserManagePage from '@/components/UserManagePage'
 import UserListPage from '@/components/UserManagePage/UserListPage'
@@ -61,6 +64,7 @@ import ChangeCurUserPwd from '@/components/ConsoleConfig/ChangeCurUserPwd'
 
 import ReportForm from '@/components/ReportForm'
 import FSSafe from '@/components/ReportForm/FSSafe'
+
 
 Vue.use(Router)
 
@@ -259,6 +263,18 @@ let router = new Router({
                 meta:{
                   title: ['异常管理', '异常告警管理']}
               },
+              { /*异常信息总览*/
+                path:'errormessage',
+                component:ErrorMessage,
+                meta:{
+                  title: ['异常管理', '异常信息查询']}
+              },
+              { /*系统日志*/
+                  path:'systemlog',
+                  component:SystemLog,
+                  meta:{
+                    title: ['异常管理', '系统日志']}
+              },
       			]
       		},
       		{ /*控制台设置*/
@@ -308,12 +324,13 @@ let router = new Router({
             path:'reportform',
             component: ReportForm,
             children:[
-        				{ /*密码修改*/
+        				{ /*系统安全报表*/
         					path:'fssafe',
         					component:FSSafe,
                   meta:{
                     title: ['系统报表', '系统安全报表']}
-        				}
+        				},
+
             ]
           }
       ]

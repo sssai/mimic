@@ -78,6 +78,10 @@ export const AUTH = {
   errorfs: "/content/auth/errorfs",
   // 异常管理--异常告警管理
   errornotify: "/content/auth/errornotify",
+  //异常信息总览
+  errormessage:"/content/auth/errormessage",
+    //系统日志
+  systemlog:"/content/auth/systemlog"
 }
 
 // 控制台设置
@@ -100,7 +104,7 @@ export const CONSOLE_CONFIG = {
 export const REPORT_FORM = {
   indexpage: "/content/reportform",
   // 系统报表-系统安全报表
-  fssafe: "/content/reportform/fssafe"
+  fssafe: "/content/reportform/fssafe",
 }
 
 export default {

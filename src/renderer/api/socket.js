@@ -19,10 +19,10 @@ if (type.LOCAL_TEST) {
     host: '219.223.197.127'
     /*host:'0.0.0.0',
  			hostBackup:'0.0.0.0'*/
-  }
 }
-console.log("【CM host IP】"+configObj.host );
-console.log("【CM hostBackup IP】"+configObj.hostBackup );
+// }
+console.log("【CM host IP】" + configObj.host);
+console.log("【CM hostBackup IP】" + configObj.hostBackup);
 if (fs.existsSync(configPath)) {
   try {
     configObj = JSON.parse(fs.readFileSync(configPath).toString())
@@ -45,7 +45,8 @@ class Socket {
     this.host = configObj.host || '219.223.199.154'
     // this.host = '219.223.192.110'
     this.hostBackup = configObj.hostBackup || '192.168.1.11'
-    this.port = 10086
+    // this.port = 10086
+    this.port = 10287
     /**
      * 新建一个socket
      * @type {net}
@@ -104,7 +105,21 @@ class Socket {
    */
   write(data) {
     const buf = Buffer.from(data)
-    this._socket.write(buf)
+    // 获取要传输的字符串长度
+    let num = buf.length
+    // 构建要生成buffer的数组，会往数组头部加4位数字
+    let arr = []
+    arr.push(num / 16581375)
+    num = num % 16581375
+    arr.push(num / 65025)
+    num = num % 65025
+    arr.push(num / 255)
+    num = num % 255
+    arr.push(num)
+    let buf2 = Buffer.from(arr)
+    let buf3 = Buffer.concat([buf2, buf])
+    console.log("buf3",buf3);
+    this._socket.write(buf3)
   }
   /**
    * @author Craig
@@ -119,14 +134,15 @@ class Socket {
     return new Promise((resolve, reject) => {
       that._socket.on('data', data => {
         str += data
+        //str=str.slice(4,-2)
       })
       that._socket.on('error', error => {
         that._socket.end()
+        console.log("error:", error);
         reject(error)
       })
       that._socket.on('end', () => {
-        // console.log(str,1)
-        resolve(str)
+        resolve(str.slice(4))
       })
       // that._socket.on('timeout', () => {
       // 	console.log('socket timeout')

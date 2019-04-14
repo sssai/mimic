@@ -9,27 +9,29 @@
     <el-submenu :index="fsUserManage" v-if="getFsUserManagePerminssion">
       <template slot='title'>
         <i class="el-icon-document"></i>
-        <span>FS用户管理</span>
+        <span>用户管理</span>
       </template>
       <el-menu-item :index="userlist" v-if="getPermissionTree.user_manage">用户管理</el-menu-item>
       <el-menu-item :index="groupmanage" v-if="getPermissionTree.group_manage">组管理</el-menu-item>
-      <el-menu-item :index="changepassword" v-if="getPermissionTree.user_pwd_init">用户密码重置</el-menu-item>
+      <!-- <el-menu-item :index="changepassword" v-if="getPermissionTree.user_pwd_init">用户密码重置</el-menu-item> -->
       <el-menu-item :index="useraudit" v-if="getPermissionTree.user_check">用户审核</el-menu-item>
     </el-submenu>
 
+    <!-- 云平台版本暂时不需要，先隐藏该路径 -->
     <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
       <template slot='title'>
         <i class="el-icon-setting"></i>
         <span>配置管理</span>
       </template>
       <el-menu-item :index="filesystem" v-if="getPermissionTree.fs_manage">文件系统配置</el-menu-item>
-      <!-- <el-menu-item :index="mountnode">挂载节点配置</el-menu-item> -->
-      <el-menu-item :index="cert" v-if="getPermissionTree.global_cert_manage">全局证书配置</el-menu-item>
+ <!--    <el-menu-item :index="mountnode">挂载节点配置</el-menu-item> -->
+    <el-menu-item :index="cert" v-if="getPermissionTree.global_cert_manage">全局证书配置</el-menu-item>
       <el-menu-item :index="globalpara" v-if="getPermissionTree.global_param_manage">全局参数配置</el-menu-item>
       <el-menu-item :index="systemstructure" v-if="getPermissionTree.system_func_structure">系统功能结构</el-menu-item>
       <el-menu-item :index="creatdir" v-if="getPermissionTree.director_manage">目录管理</el-menu-item>
     </el-submenu>
 
+    <!-- 云平台版本暂时不需要，先隐藏该路径 -->
     <el-submenu :index="monitor" v-if="getMonitorPerminssion">
       <template slot='title'>
         <i class="el-icon-view"></i>
@@ -58,6 +60,8 @@
       <el-menu-item :index="errorfilemanage">异常文件管理</el-menu-item>
       <el-menu-item :index="errorfs">异常文件系统管理</el-menu-item>
       <el-menu-item :index="errornotify">异常告警管理</el-menu-item>
+      <el-menu-item :index="errormessage">异常信息查询</el-menu-item>
+      <el-menu-item :index="systemlog">系统日志</el-menu-item>
     </el-submenu>
 
     <el-submenu :index="reportform" v-if="getReportFormPerminssion">
@@ -131,6 +135,7 @@ export default {
       errorfilemanage: global_.AUTH.errorfilemanage,
       errorfs: global_.AUTH.errorfs,
       errornotify: global_.AUTH.errornotify,
+      errormessage: global_.AUTH.errormessage,
       consoleConfig: global_.CONSOLE_CONFIG.indexpage,
       changecuruserpwd: global_.CONSOLE_CONFIG.changecuruserpwd,
       acgroupmanage: global_.CONSOLE_CONFIG.groupmanage,
@@ -138,6 +143,7 @@ export default {
       consolelock: global_.CONSOLE_CONFIG.consolelock,
       reportform: global_.REPORT_FORM.indexpage,
       fssafe: global_.REPORT_FORM.fssafe,
+      systemlog: global_.AUTH.systemlog,
     }
   },
   mounted: function() {
@@ -147,7 +153,7 @@ export default {
     getPermissionTree() {
       return this.$store.getters.getPermission
     },
-    getFsUserManagePerminssion(){
+    getFsUserManagePerminssion() {
       return this.getPermissionTree.user_manage &&
         this.getPermissionTree.group_manage &&
         this.getPermissionTree.user_pwd_init &&
@@ -162,24 +168,24 @@ export default {
     },
     getMonitorPerminssion() {
       return this.getPermissionTree.fs_monitor &&
-      this.getPermissionTree.node_status_monitor &&
-      this.getPermissionTree.meta_data_monitor
+        this.getPermissionTree.node_status_monitor &&
+        this.getPermissionTree.meta_data_monitor
     },
     getMounterPerminssion() {
       return this.getPermissionTree.fs_mnt_manage &&
-      this.getPermissionTree.fs_mnt_view &&
-      this.getPermissionTree.mnt_node_manage
+        this.getPermissionTree.fs_mnt_view &&
+        this.getPermissionTree.mnt_node_manage
     },
     getAuthPerminssion() {
-      console.log("getAuthPerminssion:"+this.getPermissionTree.exception_file_manage &&
+      console.log("getAuthPerminssion:" + this.getPermissionTree.exception_file_manage &&
         this.getPermissionTree.exception_fs_manage);
       return this.getPermissionTree.exception_file_manage &&
         this.getPermissionTree.exception_fs_manage
     },
     getReportFormPerminssion() {
-      console.log("this.getPermissionTree.fssafe:"+this.getPermissionTree.fssafe);
-      for(let i in this.getPermissionTree){
-        console.log("this.getPermissionTree["+i+"]"+this.getPermissionTree[i]);
+      console.log("this.getPermissionTree.fssafe:" + this.getPermissionTree.fssafe);
+      for (let i in this.getPermissionTree) {
+        console.log("this.getPermissionTree[" + i + "]" + this.getPermissionTree[i]);
       }
       return this.getPermissionTree.fssafe
     },

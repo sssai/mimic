@@ -918,4 +918,140 @@ resp{
 	errormessage :
 }
 
+
+
+*************************云平台版本********************************
+//MDFS状态监控
+req{
+       “type”:20（int型）
+}
+resp{
+       “type”:20（int型）
+       “state”:”” String型
+       “errorMessage”:”” String型
+       “mdfsInfo”: {
+       “mdfsStatus”:“”     String型        //运行状态(0表示正常运行，1表示运行异常，若为1，此时所有的mdfsinfo数据为异常前最新的一次数据)
+       “mdfsStorage”:double型           //存储容量
+       “mdfsAvailable”: double型         //可用容量
+       “mdfsMntPath”:    “”String型     //挂载路径
+       “upLinkSpeed”:1 long型               //实时上行速率，单位为k/s
+       “downLinkSpeed”:1 long型           //实时下行速率，单位为k/s
+}
+
+//底层文件系统状态监控
+req{
+	“type”:21（int型）
+}
+resp{
+	“type”:21（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+	“fsInfo”:[	//文件系统  数组型
+	{
+		“bottomFsId”:1(int型)
+	“fsStorage”:double型		//存储容量
+	“fsAvailable”: double型		//可用容量
+	“fsUserd”:	double型		//已用容量
+	“fsType”:	“”String型		//文件系统类型
+	“fsMntPath”:	“”String型	//挂载路径
+	“fsStatus”:“”	String型		//运行状态(是否正常运行) 0：正常运行 1：异常
+}
+]
+}
+
+//异常信息查询
+//查询最新的20条数据
+req{
+	type:22
+}
+resp{
+	“type”:22（int型）
+	“state”:“”String型
+	“errorMessage”:“”String型
+	“exStaticsDay”: String//异常统计信息： 最近一天内文件系统异常次数
+“exStaticsHour”: String//异常统计信息：最近一小时内文件系统异常次数
+	“exInfo”:[		//异常信息  数组型
+	{
+	“exDate”:“”String型		//发生时间 格式：2019-03-14 01:30:59
+	“exFsId”:int型				//文件系统的id
+	“exFsPath”:””String			//文件系统出错的路径
+	“exFilePath”:“”	String型		//异常文件路径
+	“repairType”:	“”String型	//修复类型
+	“exDetail”:””				//错误详细信息
+	“transferPath”:“”String型	//转储路径}
+}
+]
+}
+//可以按照时间查询数据：
+req{
+	“type”:23
+	“startTime”:””		//格式为2019-03-14
+“endTime”:””		//格式为2019-03-14
+}
+resp{
+	“type”:23（int型）
+	“state”:“”String型
+	“errorMessage”:“”String型
+	“exStaticsDay”: String//异常统计信息： 最近一天内文件系统异常次数
+“exStaticsHour”: String//异常统计信息：最近一小时内文件系统异常次数
+
+	“exInfo”:[		//异常信息  数组型
+	{
+	“exDate”:“”String型		//发生时间 格式：2019-03-14 01:30:59
+	“exFsId”:int型				//文件系统的id
+	“exFsPath”:””String			//文件系统出错的路径
+	“exFilePath”:“”	String型		//异常文件路径
+	“repairType”:	“”String型	//修复类型
+	“exDetail”:””				//错误详细信息
+	“transferPath”:“”String型	//转储路径}
+]
+}
+
+
+//日志信息查询模块
+//查询最新的20条数据
+req{
+	“type”:24（int型）
+}
+resp{
+	“type”:24（int型）
+	“state”:“”	String型
+	“errorMessage”:“”String型
+	“logInfo”:[   数组型
+	{
+	“logDate”:“”String型		//日志时间 格式：2019-03-14 01:30:59
+	“logThreadId”:int
+	“logLevel”:“”String型	//日志等级
+	“logLevelInt”:int
+	“logInfo”:”” String型	//详细日志信息
+	“logLocation”:””		//日志出现的位置
+}
+]
+}
+
+//查询某一天的数据;
+req{
+	“type”:25（int型）
+    “startTime”:””		//格式为2019-03-14
+“endTime”:””		//格式为2019-03-14
+
+}
+resp{
+	“type”:25（int型）
+	“state”:“”	String型
+	“errorMessage”:“”String型
+	“logInfo”:[   数组型
+	{
+	“logDate”:“”String型		//日志时间 格式：2019-03-14 01:30:59
+	“logThreadId”:int
+	“logLevel”:“”String型	//日志等级
+	“logLevelInt”:int
+	“logInfo”:”” String型	//详细日志信息
+	“logLocation”:””		//日志出现的位置
+}
+]
+}
+
+
+
 ```

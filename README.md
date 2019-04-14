@@ -1,4 +1,4 @@
-# mimic
+# mdfs_AC
 
 > An electron-vue project
 > 主要用到element-ui、vuex、vue-router和vue，需要熟悉这些内容的API以及ES6（参考阮一峰的网站es6.ruanyifeng.com）的用法
@@ -29,7 +29,7 @@ yarn test
 	"hostBackup":"192.168.1.14"
 }
 ```
-这个文件被放置在Windows中%APPDATA%目录下的mimic文件夹中，一般是C:\Users\xxx\AppData\Roaming\mimic
+这个文件被放置在Windows中%APPDATA%目录下的mdfs_AC文件夹中，一般是C:\Users\xxx\AppData\Roaming\mdfs_AC
 
 在开发过程中为了方便本地自测，在src/render/api/type.js下设置了一个LOCAL_TEST变量。当设为true时，为本地自测模式，某些api的js会因为设置了这个之后进入测试模式，比如user.js里面的登录方法会因为这个为true而登录时不会验证用户密码的正确性，可以直接登录等，所有和这个变量相关的方法都在type.js的该变量前注释了。如果要进入联调或者打包使用，请去修改这个变量为false关闭自测或把该变量以及相关方法中的自测部分删除。
 
@@ -84,3 +84,5 @@ Error in mounted hook: "TypeError: Cannot read property 'force' of undefined"，
 v4没有这个函数了，相应的功能已经变成了forceSimulation
 
 d3 v3的API 有函数不会用可以直接搜 https://github.com/d3/d3-3.x-api-reference/blob/master/API-Reference.md
+
+### 代码的权限控制
