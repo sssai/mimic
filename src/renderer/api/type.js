@@ -1,5 +1,5 @@
 // localTest，本地自测试时设为true，联调设为false，使用了该变量的方法请见变量下一行的注释
-export const LOCAL_TEST = true
+export const LOCAL_TEST = false
 // api
 //  ├─acUserTable.js
 //  │   ├─GetDataTable()

@@ -16,7 +16,7 @@ if (type.LOCAL_TEST) {
 } else {
   configObj = {
     hostBackup: '219.223.197.76', //'219.223.197.76'(haiyang),219.223.193.99(yuan),219.223.193.22(test),219.223.197.89
-    host: '219.223.193.99'
+    host: '219.223.197.127'
     /*host:'0.0.0.0',
  			hostBackup:'0.0.0.0'*/
   }
