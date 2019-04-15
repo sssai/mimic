@@ -136,15 +136,24 @@ export default {
       // 这里用于监视图表是否有变化，有的话更新数据图
       let dom = document.getElementById("resultchart");
       let option = this.getChartOpt;
-      /* // 打印图表的option信息
-      console.log("option:" + JSON.stringify(option));*/
-      this.myChart = echarts.init(dom, null, {
-        renderer: 'canvas'
-        /*renderer: 'svg'*/
-      });
-      this.myChart.hideLoading()
-      this.myChart.setOption(option, true);
-      window.onresize = this.myChart.resize;
+      if (option.series[0].data.length <= 0 || option.series[0].data == undefined) {
+        Message({
+          showClose: true,
+          message: "选择的时间段没有异常数据，请重新选择时间",
+          type: 'error',
+          duration: 2000
+        })
+      } else {
+        /* // 打印图表的option信息
+        console.log("option:" + JSON.stringify(option));*/
+        this.myChart = echarts.init(dom, null, {
+          renderer: 'canvas'
+          /*renderer: 'svg'*/
+        });
+        this.myChart.hideLoading()
+        this.myChart.setOption(option, true);
+        window.onresize = this.myChart.resize;
+      }
     }
   },
   methods: {
@@ -204,7 +213,7 @@ export default {
         let option = opt;
         if (option && typeof option === "object") {
           thisVue.myChart.hideLoading()
-          console.log("thisVue.myChart.setOption(option, true):"+JSON.stringify(option));
+          // console.log("thisVue.myChart.setOption(option, true):" + JSON.stringify(option));
           thisVue.myChart.setOption(option, true);
         }
         window.onresize = thisVue.myChart.resize;
@@ -242,6 +251,15 @@ export default {
           type: 'error',
           duration: 2000
         })
+      } else if (this.getChartOpt.series[0].data.length <= 0 || this.getChartOpt.series[0].data == undefined) {
+        // 如果图标数据为空或者未定义，说明没有成功生成图表数据或生成图表数据失败，此时数据为空，导出数据无意义，不给导出数据
+        Message({
+          showClose: true,
+          message: "选择的时间段没有异常数据，请重新选择时间",
+          type: 'error',
+          duration: 2000
+        })
+
       } else {
         let savefilename = this.form.time.getFullYear()
         // 设置要导出的文件标题
@@ -285,7 +303,7 @@ export default {
           }
           //数据格式化，把数组转为索引数组
           let data = this.formatJson(filterVal, list);
-           //导出文件
+          //导出文件
           export_json_to_excel(tHeader, data, savefilename);
         })
       }

@@ -43,7 +43,7 @@ export async function GetRecentError(param) {
  * @return  {Boolean}        true为正确提交，报错则不正确
  * @description 按照时间查询异常信息
  */
-export async function GetErrorByTime(startTime,endTime,pageSize,currentPage) {
+export async function GetErrorByTime(startTime,endTime) {
 	try {        
 
 		let socket = new Socket()
@@ -51,8 +51,6 @@ export async function GetErrorByTime(startTime,endTime,pageSize,currentPage) {
 			type: type.ERROR_MESSAGE_BY_TIME,
 			startTime: startTime,
 			endTime:endTime,
-			pageSize:pageSize,
-			currentPage:currentPage,
 		}
 		socket.write(JSON.stringify(data))
         console.log('23data',data)
@@ -95,7 +93,7 @@ export async function GetRecentLog(param) {
 		// TODO 后台返回的结果缺少表示错误的字段，state and errormessage
 		if (obj.state == 0|| obj.type !=64) {
 
-			return obj
+			return obj.logInfo
 			
 		} else {
 			throw new Error(obj.errormessage)
@@ -113,7 +111,7 @@ export async function GetRecentLog(param) {
  * @return  {Boolean}        true为正确提交，报错则不正确
  * @description 按照时间查询日志信息
  */
-export async function GetLogByTime(startTime,endTime,pageSize,currentPage) {
+export async function GetLogByTime(startTime,endTime) {
 	try {        
 
 		let socket = new Socket()
@@ -121,8 +119,6 @@ export async function GetLogByTime(startTime,endTime,pageSize,currentPage) {
 			type: type.GRT_LOG_BY_TIME,
 			startTime: startTime,
 			endTime:endTime,
-			pageSize:pageSize,
-			currentPage:currentPage,
 		}
 		socket.write(JSON.stringify(data))
         console.log('MDFS25data',data)
@@ -132,7 +128,7 @@ export async function GetLogByTime(startTime,endTime,pageSize,currentPage) {
 		// TODO 后台返回的结果缺少表示错误的字段，state and errormessage
 		if (obj.state == 0|| obj.type !=64) {
 
-			return obj
+			return obj.logInfo
 			
 		} else {
 			throw new Error(obj.errormessage)

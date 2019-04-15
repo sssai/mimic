@@ -67,7 +67,6 @@ const actions = {
     payload = payload.data
     // 从后台获取报表的信息，保存到data的info中
     let data = await reportForm.GetFSSafeReport(payload)
-    console.log("payload.charttype:"+payload.charttype);
     let datanew = data || {
       info: []
     }
@@ -85,7 +84,6 @@ const actions = {
         type: payload.charttype
       }]
     }
-    datanew.exportdata = []
     // 用户希望展示的报表周期，如年、月、日
     let chartspan = payload.chartspan
     // 用户要获取的报表的年份
@@ -97,10 +95,11 @@ const actions = {
     let resultReportMap = new Map()
     // 报表周期对应的时间轴，如x轴分为12个月，31天，或24小时，分别对应年、月、日
     let dataspan
+    // 标志值，用于标志数据是否有新增，如果有，则把该值改为false
+    let isEntry = true
     // 判断用户要获取的报表周期
     if (chartspan == "year") {
       dataspan = 12
-      datanew.exportdata = datanew.info
       for (let i = 0; i < datanew.info.length; i++) {
         let opera_date = ChangeStrToDate(datanew.info[i].time)
         // 查看目标年份各月份的故障数量
@@ -111,6 +110,7 @@ const actions = {
             resultReportMap.set((opera_date.getMonth() + 1),
               (resultReportMap.get(opera_date.getMonth() + 1) + 1))
           }
+          isEntry = false
         }
       }
       datanew.chartopt.title.text = targetYear + "年各月份异常情况"
@@ -128,7 +128,7 @@ const actions = {
           } else {
             resultReportMap.set(opera_date.getDate(), (resultReportMap.get(opera_date.getDate()) + 1))
           }
-          datanew.exportdata.push(datanew.info[i])
+          isEntry = false
         }
       }
       datanew.chartopt.title.text = targetYear + "年" + (targetMonth + 1) + "月每日异常情况"
@@ -146,7 +146,7 @@ const actions = {
           } else {
             resultReportMap.set(opera_date.getHours(), (resultReportMap.get(opera_date.getHours()) + 1))
           }
-          datanew.exportdata.push(datanew.info[i])
+          isEntry = false
         }
       }
       datanew.chartopt.title.text = targetYear + "年" + (targetMonth + 1) + "月" + targetDay + "日每小时异常情况"
@@ -178,26 +178,30 @@ const actions = {
           if (chartspan == "year") {
             chartdata.push({
               value: resultReportMap.get(a) | 0,
-              name: a +"月"
+              name: a + "月"
             })
-            legendData.push(a +"月")
+            legendData.push(a + "月")
           } else if (chartspan == "month") {
             chartdata.push({
               value: resultReportMap.get(a) | 0,
-              name: a +"日"
+              name: a + "日"
             })
-            legendData.push(a +"日")
+            legendData.push(a + "日")
           } else {
             chartdata.push({
               value: resultReportMap.get(a) | 0,
-              name: a +"时"
+              name: a + "时"
             })
-            legendData.push(a +"时")
+            legendData.push(a + "时")
           }
         }
       }
       datanew.chartopt.tooltip.formatter = "{b} ：异常{c}次 <br/>占总比例{d}%"
-      datanew.chartopt.series[0].data = chartdata
+      if (isEntry) {
+        datanew.chartopt.series[0].data = []
+      } else {
+        datanew.chartopt.series[0].data = chartdata
+      }
       datanew.chartopt.legend.data = legendData
     } else {
       // 如果是柱状图和折线图，则使用默认option即可，若为饼图，则需要进一步添加option的参数
@@ -247,7 +251,11 @@ const actions = {
         }
       }
       datanew.chartopt.xAxis.data = x
-      datanew.chartopt.series[0].data = y
+      if (isEntry) {
+        datanew.chartopt.series[0].data = []
+      } else {
+        datanew.chartopt.series[0].data = y
+      }
     }
     commit(types.GET_FS_SAFE_REPORT_FORMAT, datanew)
     commit(types.GET_FS_SAFR_REPORT_INFO, datanew)

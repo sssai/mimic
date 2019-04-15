@@ -9,30 +9,30 @@
     <el-submenu :index="fsUserManage" v-if="getFsUserManagePerminssion">
       <template slot='title'>
         <i class="el-icon-document"></i>
-        <span>用户管理</span>
+        <span>FS用户管理</span>
       </template>
       <el-menu-item :index="userlist" v-if="getPermissionTree.user_manage">用户管理</el-menu-item>
       <el-menu-item :index="groupmanage" v-if="getPermissionTree.group_manage">组管理</el-menu-item>
-      <!-- <el-menu-item :index="changepassword" v-if="getPermissionTree.user_pwd_init">用户密码重置</el-menu-item> -->
+      <el-menu-item :index="changepassword" v-if="getPermissionTree.user_pwd_init">用户密码重置</el-menu-item>
       <el-menu-item :index="useraudit" v-if="getPermissionTree.user_check">用户审核</el-menu-item>
     </el-submenu>
 
     <!-- 云平台版本暂时不需要，先隐藏该路径 -->
-    <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
+    <!-- <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
       <template slot='title'>
         <i class="el-icon-setting"></i>
         <span>配置管理</span>
       </template>
-      <el-menu-item :index="filesystem" v-if="getPermissionTree.fs_manage">文件系统配置</el-menu-item>
- <!--    <el-menu-item :index="mountnode">挂载节点配置</el-menu-item> -->
-    <el-menu-item :index="cert" v-if="getPermissionTree.global_cert_manage">全局证书配置</el-menu-item>
+      <el-menu-item :index="filesystem" v-if="getPermissionTree.fs_manage">文件系统配置</el-menu-item> -->
+    <!-- <el-menu-item :index="mountnode">挂载节点配置</el-menu-item> -->
+    <!-- <el-menu-item :index="cert" v-if="getPermissionTree.global_cert_manage">全局证书配置</el-menu-item>
       <el-menu-item :index="globalpara" v-if="getPermissionTree.global_param_manage">全局参数配置</el-menu-item>
       <el-menu-item :index="systemstructure" v-if="getPermissionTree.system_func_structure">系统功能结构</el-menu-item>
       <el-menu-item :index="creatdir" v-if="getPermissionTree.director_manage">目录管理</el-menu-item>
-    </el-submenu>
+    </el-submenu> -->
 
     <!-- 云平台版本暂时不需要，先隐藏该路径 -->
-    <el-submenu :index="monitor" v-if="getMonitorPerminssion">
+    <!-- <el-submenu :index="monitor" v-if="getMonitorPerminssion">
       <template slot='title'>
         <i class="el-icon-view"></i>
         <span>监控视图</span>
@@ -40,7 +40,7 @@
       <el-menu-item :index="fseorror" v-if="getPermissionTree.fs_monitor">文件系统监控</el-menu-item>
       <el-menu-item :index="nodestatus" v-if="getPermissionTree.node_status_monitor">节点状态监控</el-menu-item>
       <el-menu-item :index="edataeorror" v-if="getPermissionTree.meta_data_monitor">元数据监控</el-menu-item>
-    </el-submenu>
+    </el-submenu> -->
 
     <el-submenu :index="mounter" v-if="getMounterPerminssion">
       <template slot='title'>

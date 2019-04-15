@@ -5,7 +5,7 @@
       <el-col style="width:400px;height:350px;">
         <el-card class="">
           <div slot="header" class="clearfix">
-            <span>拟态存储系统管理控制台（云平台版）</span>
+            <span>拟态存储系统管理控制台</span>
           </div>
           <el-col style="width:400px;height:350px;">
             <el-form status-icon label-width="60px" ref="userform" :model="userform" :rules="userrule">
@@ -29,6 +29,7 @@
             </el-form>
           </el-col>
         </el-card>
+
       </el-col>
     </el-row>
   </el-col>
