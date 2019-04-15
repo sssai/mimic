@@ -2,7 +2,7 @@
 <el-aside id="aside" width="210px">
   <!--<el-aside style="height:100%;border-right:2px solid;border-right-color:#f0f0f0">-->
   <el-menu :default-active="$route.path" class="el-menu-demo" unique-opened mode="vertical" background-color="#252a2f" text-color="white" active-text-color="#00c1de" style="border:solid 1px #252a2f" @select="" v-bind:router="true">
-    <el-menu-item :index="summary" v-if="getPermissionTree.summary">
+    <el-menu-item :index="summary">
       <i class="el-icon-menu"></i>
       <span slot="title">数据监控</span>
     </el-menu-item>
@@ -52,18 +52,14 @@
       <el-menu-item :index="mountermanage" v-if="getPermissionTree.mnt_node_manage">挂载节点管理</el-menu-item>
     </el-submenu> -->
 
-    <el-submenu :index="auth" v-if="getAuthPerminssion">
-      <template slot='title'>
-        <i class="el-icon-bell"></i>
-        <span>系统信息查询</span>
-      </template>
-<!--       <el-menu-item :index="errorfilemanage">异常文件管理</el-menu-item>
-      <el-menu-item :index="errorfs">异常文件系统管理</el-menu-item>
-      <el-menu-item :index="errornotify">异常告警管理</el-menu-item> -->
-      <el-menu-item :index="errormessage">异常信息查询</el-menu-item>
-      <el-menu-item :index="systemlog">系统日志查询</el-menu-item>
-    </el-submenu>
-
+    <el-menu-item :index="errormessage">
+      <i class="el-icon-info"></i>
+      <span slot="title">异常信息查询</span>
+    </el-menu-item>
+    <el-menu-item :index="systemlog">
+      <i class="el-icon-document"></i>
+      <span slot="title">系统日志查询</span>
+    </el-menu-item>
 <!--     <el-submenu :index="reportform" v-if="getReportFormPerminssion">
       <template slot='title'>
         <i class="el-icon-download"></i>

@@ -1,6 +1,7 @@
 <template>
 <el-row type="flex" align="middle" style="height:500px">
-  <el-col style="height:200px;">
+  跳转加载中，请稍候
+  <!-- <el-col style="height:200px;">
     <el-row type="flex" justify="center">
       <el-col style="width:400px;height:200px;">
         <el-card class="box-card">
@@ -16,7 +17,6 @@
               </el-form-item>
               <el-form-item label="密码" prop="password">
                 <el-input clearable style="width:250px;" type="password" @keyup.enter.native="submitForm('userform')" auto-complete="off" v-model="userform.password"></el-input>
-                <!-- <span style="cursor:pointer;" @click="resetPwd()">忘记密码？</span> -->
               </el-form-item>
               <el-form-item>
                 <el-button style="width:250px" type="primary" @click="submitForm('userform')" @keyup.enter="submitForm('userform')">登录</el-button>
@@ -32,7 +32,7 @@
 
       </el-col>
     </el-row>
-  </el-col>
+  </el-col> -->
 </el-row>
 </template>
 
@@ -67,6 +67,11 @@ export default {
         el.querySelector('input').focus();
       }
     }
+  },
+  mounted() {
+    this.$router.push({
+      path: '/content/summary'
+    })
   },
   data() {
     let validatePassword = (rule, value, callback) => {

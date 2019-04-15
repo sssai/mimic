@@ -51,7 +51,7 @@
             </el-row>
           </el-col>
           <el-col :span="18" class="mdfs_rigth_col text">
-            <el-row class="mycard card_beauty">当前MDFS挂载路径：<strong>{{getMdfsState.mdfsInfo.mdfsMntPath}}</strong></el-row>
+            <el-row class="mycard card_beauty">当前MDFS挂载路径：<strong>{{getMdfsStateMntPath}}</strong></el-row>
             <el-row class="text item">
               <el-col :span="12">
                 <div id="upRateChart" ref="upRateChart" class="rate_panl card_beauty">
@@ -70,7 +70,7 @@
     </el-row>
     <el-row class="monitor_row">
 
-      
+
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span><strong>底层文件系统状态监控</strong></span>
@@ -132,11 +132,26 @@ export default {
     getBottomfsState() {
       return this.$store.getters.getBottomfsState
     },
+    getMdfsStateMntPath() {
+      if (!this.getMdfsState.mdfsInfo) {
+        return undefined
+      } else {
+        return this.getMdfsState.mdfsInfo.mdfsMntPath
+      }
+    },
     formateMdfsStorage() {
-      return (this.getMdfsState.mdfsInfo.mdfsStorage).toFixed(2)
+      if (!this.getMdfsState.mdfsInfo) {
+        return 0
+      } else {
+        return (this.getMdfsState.mdfsInfo.mdfsStorage).toFixed(2)
+      }
     },
     formateMdfsAvailable() {
-      return (this.getMdfsState.mdfsInfo.mdfsAvailable).toFixed(2)
+      if (!this.getMdfsState.mdfsInfo) {
+        return 0
+      } else {
+        return (this.getMdfsState.mdfsInfo.mdfsAvailable).toFixed(2)
+      }
     }
   },
   data() {

@@ -20,7 +20,7 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "mimic",
+    "productName": "MDFS",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"
