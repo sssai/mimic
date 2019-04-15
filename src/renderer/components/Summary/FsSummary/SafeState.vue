@@ -15,7 +15,7 @@
       </div>
     </el-col>
   </el-row>
-  <el-row style="height:80%;width:100%;padding-top:0px">
+  <el-row style="height:80%;width:100%;">
     <el-col class="center" :span="8" style="height:100%">
       <div class="repairTitle"> 修复中</div>
       <div class="repair">{{fsrepairing}}</div>

@@ -80,36 +80,36 @@ export default {
     }
   },*/
   mounted: async function() {
-      this.updateSummary()
-    },
-    methods: {
-      async updateSummary() {
-        await this.$store.dispatch('getsummary', {}).catch((e) => {
-          if (this.$store.getters.getInSummary) {
-            Message({
-              showClose: true,
-              /*message: "获取异常：" + e.toString(),*/
-              message: "系统信息获取异常",
-              type: 'error',
-              duration: 2000
-            });
-          }
-        });
-        /*console.log("【this.$store.getters.getInSummary】" + this.$store.getters.getInSummary);*/
-        /*console.log("【this.isInSummary】" + this.isInSummary);*/
-        // 递归调度，自动从后台获取overview对象，用于更新数据
+    this.updateSummary()
+  },
+  methods: {
+    async updateSummary() {
+      await this.$store.dispatch('getsummary', {}).catch((e) => {
         if (this.$store.getters.getInSummary) {
-          setTimeout(this.updateSummary, 2000);
+          Message({
+            showClose: true,
+            /*message: "获取异常：" + e.toString(),*/
+            message: "系统信息获取异常",
+            type: 'error',
+            duration: 2000
+          });
         }
-      }
-    },
-    watch: {
-      isInSummary: function() {
-        if (this.$store.getters.getInSummary == true) {
-          this.updateSummary()
-        }
+      });
+      /*console.log("【this.$store.getters.getInSummary】" + this.$store.getters.getInSummary);*/
+      /*console.log("【this.isInSummary】" + this.isInSummary);*/
+      // 递归调度，自动从后台获取overview对象，用于更新数据
+      if (this.$store.getters.getInSummary) {
+        setTimeout(this.updateSummary, 2000);
       }
     }
+  },
+  watch: {
+    isInSummary: function() {
+      if (this.$store.getters.getInSummary == true) {
+        this.updateSummary()
+      }
+    }
+  }
 }
 </script>
 <style>
