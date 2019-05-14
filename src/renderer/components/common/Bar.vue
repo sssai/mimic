@@ -145,6 +145,7 @@ export default {
   },
   computed: {
     getPermissionTree() {
+      console.log(this.$store.getters.getPermission);
       return this.$store.getters.getPermission
     },
     getFsUserManagePerminssion(){

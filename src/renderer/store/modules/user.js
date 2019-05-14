@@ -40,7 +40,7 @@ const state = {
     ac_user_manage: true,
     ac_authority_manage: true,
     lock_manage: true,
-    fssafe: true,
+    report: true,
   }
 }
 
