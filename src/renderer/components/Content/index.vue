@@ -3,7 +3,7 @@
   <el-container style="height:100%">
   <bar />
     <el-container style="height:100%" direction='vertical'>
-      <setting-header />
+      <!-- <setting-header /> -->
       <router-view></router-view>
     </el-container>
   </el-container>

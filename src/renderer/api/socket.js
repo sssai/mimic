@@ -15,8 +15,8 @@ console.log("【本地测试】" + type.LOCAL_TEST);
 //   }
 // } else {
 configObj = {
-  hostBackup: '219.223.192.6', //'219.223.197.76'(haiyang),219.223.195.100(yuan),219.223.193.22(test),219.223.197.89
-  host: '219.223.192.6'
+  hostBackup: '172.18.1.33', //外网ip 219.223.192.6
+  host: '172.18.1.33' // 内网ip 172.18.1.33
   /*host:'0.0.0.0',
  			hostBackup:'0.0.0.0'*/
 }
@@ -45,8 +45,8 @@ class Socket {
     this.host = configObj.host || '219.223.199.154'
     // this.host = '219.223.192.110'
     this.hostBackup = configObj.hostBackup || '192.168.1.11'
-    // this.port = 10086
     this.port = 10287
+    // this.port = 10287
     /**
      * 新建一个socket
      * @type {net}
@@ -105,7 +105,20 @@ class Socket {
    */
   write(data) {
     const buf = Buffer.from(data)
-    this._socket.write(buf)
+    // 获取要传输的字符串长度
+    let num = buf.length
+    // 构建要生成buffer的数组，会往数组头部加4位数字
+    let arr = []
+    arr.push(num / 16581375)
+    num = num % 16581375
+    arr.push(num / 65025)
+    num = num % 65025
+    arr.push(num / 255)
+    num = num % 255
+    arr.push(num)
+    let buf2 = Buffer.from(arr)
+    let buf3 = Buffer.concat([buf2, buf])
+    this._socket.write(buf3)
   }
   /**
    * @author Craig

@@ -195,9 +195,8 @@ methods: {
       //表单信息获取
  		    let tableData = await errormessage.GetRecentError()
         this.pageSize= 20
-        
+        this.total=20
         this.tableData1 = tableData.exInfo
-        this.total=this.tableData1.length
         
         //统计信息获取
         this.exStaticsHour = tableData.exStaticsHour
