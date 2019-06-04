@@ -15,8 +15,8 @@ console.log("【本地测试】" + type.LOCAL_TEST);
 //   }
 // } else {
 configObj = {
-  hostBackup: '172.18.1.33', //外网ip 219.223.192.6
-  host: '172.18.1.33' // 内网ip 172.18.1.33
+  hostBackup: '219.223.196.53', //外网ip 219.223.192.6
+  host: '219.223.196.53' // 内网ip 172.18.1.33
   /*host:'0.0.0.0',
  			hostBackup:'0.0.0.0'*/
 }
@@ -119,6 +119,7 @@ class Socket {
     let buf2 = Buffer.from(arr)
     let buf3 = Buffer.concat([buf2, buf])
     this._socket.write(buf3)
+    //console.log(buf3)
   }
   /**
    * @author Craig
@@ -141,6 +142,7 @@ class Socket {
         reject(error)
       })
       that._socket.on('end', () => {
+        //console.log(str)
         resolve(str.slice(4))
       })
       // that._socket.on('timeout', () => {

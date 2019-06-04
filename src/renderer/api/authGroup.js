@@ -15,21 +15,18 @@ export async function submitAuth(param) {
 		// return true
 		let socket = new Socket()
 		let data = {
-			type: type.MANAGE_DIRS,
-			operation:"2",
+			type: 30,
 			dirName : param.dirName ,
 			user : param.user ,
 			group : param.group,
 			auth  : param.auth ,
-			pagesize :10,
-			currentPage :1,
-			id:1,
 
 		}
 		socket.write(JSON.stringify(data))
+		console.log(JSON.stringify(data))
 		let response = await socket.read()
 		let obj = JSON.parse(response)
-		if (obj.state == 0|| obj.type !=64) {
+		if (obj.state == 0) {
 			return true
 		} else {
 			throw new Error(obj.errormessage)
@@ -48,12 +45,12 @@ export async function submitAuth(param) {
  * @description 删除目录
  */
 
-export async function DeleteDirs(idArray,usernameArray) {
+export async function DeleteDirs(idArray,dirNameArray) {
 	try {
 		console.log(idArray)
-		console.log(usernameArray)
+		console.log(dirNameArray)
 		for (let i = 0; i < idArray.length; i++) {
-			await deletedirsHelper(idArray[i],usernameArray[i])
+			await deletedirsHelper(idArray[i],dirNameArray[i])
 		}
 		return true
 	} catch (e) {
@@ -61,25 +58,19 @@ export async function DeleteDirs(idArray,usernameArray) {
 	}
 }
 
-async function deletedirsHelper(id,username){
+async function deletedirsHelper(id,dirName){
 	try {
 
 		let socket = new Socket()
 		let data = {
-			type: type.MANAGE_DIRS,
-			operation:"3",
-			dirName : '',
-			user : username,
-			group : '',
-			auth  : '',
-			pagesize :10,
-			currentPage :1,
-			id:id,
+			type: 31,
+			dirId:id,
+			dirName :dirName,
 		}
 		socket.write(JSON.stringify(data))
 		let response = await socket.read()
 		let obj = JSON.parse(response)
-		if (obj.state == 0|| obj.type !=64) {
+		if (obj.state == 0) {
 			return true
 		} else {
 			throw new Error(obj.errormessage)
@@ -100,17 +91,16 @@ async function deletedirsHelper(id,username){
  * @date    2018-09-14
  * @param   {Object}   data 一个对象，包含下面的字段
  * @return  {Boolean}        true为正确提交，报错则不正确
- * @description 管理用户组中的用户
+ * @description 向某个组中添加用户
  */
-export async function submitGroupManage(User,Group,Operation) {
+export async function AddUserToGroup(User,Group) {
 	try {
 		// return true
 		let socket = new Socket()
 		let data = {
-			type: type.ManageUserAndGroup ,
-			user: User ,
-			group:Group ,
-			operation :Operation ,
+			type: 35 ,
+			userName: User ,
+			groupName:Group ,
 		}
 
 		let d = JSON.stringify(data)
@@ -120,7 +110,7 @@ export async function submitGroupManage(User,Group,Operation) {
 
 		let response = await socket.read()
 		let obj = JSON.parse(response)
-		if (obj.state == 0|| obj.type !=64) {
+		if (obj.state == 0) {
 			return true
 		} else {
 			throw new Error(obj.errormessage)
@@ -129,7 +119,41 @@ export async function submitGroupManage(User,Group,Operation) {
 		throw new Error(e.toString())
 	}
 }
+/**
+ * @author saisai
+ * @version
+ * @date    2018-09-14
+ * @param   {Object}   data 一个对象，包含下面的字段
+ * @return  {Boolean}        true为正确提交，报错则不正确
+ * @description 从某个组中删除用户
+ */
+export async function DeleteUserFromGroup(User,Group) {
+	try {
+		// return true
+		let socket = new Socket()
+		let data = {
+			type: 36 ,
+			userName: User ,
+			groupName:Group ,
+			
+		}
 
+		let d = JSON.stringify(data)
+		let f = JSON.parse(d)
+
+		socket.write(JSON.stringify(data))
+
+		let response = await socket.read()
+		let obj = JSON.parse(response)
+		if (obj.state == 0) {
+			return true
+		} else {
+			throw new Error(obj.errormessage)
+		}
+	} catch (e) {
+		throw new Error(e.toString())
+	}
+}
 
 /**
  * @author Saisai
@@ -144,16 +168,9 @@ export async function GetDirs(param) {
 
 		let socket = new Socket()
 		let data = {
-			type: type.MANAGE_DIRS,
-			operation:"1",
-			dirName : param.dirName ,
-			user : param.user ,
-			group : param.group,
-			auth  : param.auth ,
-			pagesize :param.pageSize,
+			type: 32,
+			pageSize :param.pageSize,
 			currentPage : param.currentPage ,
-			id:1,
-
 		}
 		socket.write(JSON.stringify(data))
 
@@ -188,7 +205,7 @@ export async function UpdateDir(param) {
 
 		let socket = new Socket()
 		let data = {
-			type: type.CHANGE_DIR,
+			type: 33,
 			id:param.id,
 			path:param.path,
 			dirName:param.dirName,
@@ -219,17 +236,28 @@ export async function UpdateDir(param) {
  * @param   {Object}   null
  * @description 查询所有群组信息
  */
-export async function GetGroups(param) {
+export async function GetGroups() {
 	try {
-
+        let datatry=[
+        {
+        	id:1,
+        	group:"hhh"
+        },
+        {
+        	id:2,
+        	group:"xxx"
+        },
+        ]
+        //return datatry
 
 		let socket = new Socket()
 		let data = {
-			type: type.GET_GROUP,
+			type: 29,
 		}
 		socket.write(JSON.stringify(data))
 
 		let response = await socket.read()
+		console.log(29,response)
 		let obj = JSON.parse(response)
 		// TODO 后台返回的结果缺少表示错误的字段，state and errormessage
 		if (obj) {
@@ -257,15 +285,15 @@ export async function DeleteGroup2(id,groupname){
 	try {
 		let socket = new Socket()
 		let data = {
-			type: type.DELETE_GROUP,
+			type: 28,
 			id:id,
-			groupName : groupname,
+			ugroup : groupname,
 
 		}
 		socket.write(JSON.stringify(data))
 		let response = await socket.read()
 		let obj = JSON.parse(response)
-		if (obj.state == 0|| obj.type !=64) {
+		if (obj.state == 0) {
 			return true
 		} else {
 			throw new Error(obj.errormessage)
@@ -289,14 +317,14 @@ export async function CreateGroup(param) {
 		// return true
 		let socket = new Socket()
 		let data = {
-			type: type.CREATE_GROUP,
-			group: param,
+			type: 26,
+			ugroup: param,
 		}
 		console.log(data)
 		socket.write(JSON.stringify(data))
 		let response = await socket.read()
 		let obj = JSON.parse(response)
-		if (obj.state == 0|| obj.type !=64) {
+		if (obj.state == 0) {
 			return true
 		} else {
 			throw new Error(obj.errormessage)
@@ -318,14 +346,14 @@ export async function ChangeGroupName(ID,newGroupName) {
 
 		let socket = new Socket()
 		let data = {
-			type: type.CHANGE_GROUPNAME,
+			type: 27,
 			id:ID,
-			groupName:newGroupName,
+			ugroup:newGroupName,
 		}
 		socket.write(JSON.stringify(data))
 		let response = await socket.read()
 		let obj = JSON.parse(response)
-		if (obj.state == 0|| obj.type !=64) {
+		if (obj.state == 0) {
 			return true
 		} else {
 			throw new Error(obj.errormessage)
@@ -335,94 +363,6 @@ export async function ChangeGroupName(ID,newGroupName) {
 	}
 }
 
-// /**
-//  * @author Saisai
-//  * @version 1.0.0
-//  * @date    2018-08-015
-//  * @param   {Object}   null
-//  * @description 查询群组与用户的关系信息
-//  */
-// export async function GetGroupRelas(param) {
-// 	try {
-
-
-// 		let socket = new Socket()
-// 		let data = {
-// 			type: type.USER_GROUP,
-// 			pagesize :param.pageSize,
-// 			currentPage : param.currentPage ,
-
-// 		}
-// 		socket.write(JSON.stringify(data))
-
-// 		let response = await socket.read()
-// 		let obj = JSON.parse(response)
-// 		// TODO 后台返回的结果缺少表示错误的字段，state and errormessage
-// 		if (obj) {
-
-// 			console.log(obj)
-// 			return {
-// 				grouprelas:obj
-// 			}
-// 		} else {
-// 			throw new Error(obj.errormessage)
-// 		}
-// 	} catch (e) {
-// 		throw new Error(e.toString())
-// 	}
-// }
-
-// /**
-//  * @author saisai
-//  * @version 1.1.0
-//  * @date    2018-08-014
-//  * @param   {Object}   data 一个对象，包含下面的字段
-//  * @return  {Boolean}        true为正确提交，报错则不正确
-//  * @description 删除组群与用户的关系
-//  */
-
-// export async function DeleteGroupsRela(usernameArray,groupnameArray,operationArray) {
-// 	try {
-// 		// console.log(idArray)
-// 		// console.log(groupnameArray)
-// 		for (let i = 0; i < operationArray.length; i++) {
-// 			// console.log(idArray[i])
-// 			await deletegrouprelasHelper(usernameArray[i],groupnameArray[i],operationArray[i])
-
-// 		}
-// 		return true
-// 	} catch (e) {
-// 		throw new Error(e.toString())
-// 	}
-// }
-
-// async function deletegrouprelasHelper(user,group,operation){
-// 	try {
-// 		// return true
-// 		let socket = new Socket()
-// 		let data = {
-// 			type: type.ManageUserAndGroup ,
-// 			user : user , //挂载节点的id，与cmNode的id保持一致
-// 			group :group ,  //文件系统id
-// 			operation :operation ,  //文件系统的挂载路径
-// 		}
-
-// 		let d = JSON.stringify(data)
-// 		let f = JSON.parse(d)
-
-// 		socket.write(JSON.stringify(data))
-
-// 		let response = await socket.read()
-// 		let obj = JSON.parse(response)
-// 		if (obj.state == 0) {
-// 			return true
-// 		} else {
-// 			throw new Error(obj.errormessage)
-// 		}
-// 	} catch (e) {
-// 		throw new Error(e.toString())
-// 	}
-// }
 
 
 /**
@@ -438,14 +378,15 @@ export async function GroupUserRela(groupname,dataType) {
 
 		let socket = new Socket()
 		let data = {
-			type: type.GROUP_INFO,
-			goup:groupname,
+			type: 34,
+			groupName:groupname,
 		}
 		socket.write(JSON.stringify(data))
 		let response = await socket.read()
 		let obj = JSON.parse(response)
+		console.log(34,response)
 		// TODO 后台返回的结果缺少表示错误的字段，state and errormessage
-		if (obj.state == 0|| obj.type !=64) {
+		if (obj.state == 0) {
 			if(dataType=="notGroupUsers")
 			{
 				return obj.notGroupUsers

@@ -1,47 +1,35 @@
 <template>
-  <el-row type="flex" justify="center">
-    <el-col style="width:500px;">
-      <div style="margin:20px 0;">
-        <el-form status-icon label-width="120px" ref="certform" :model="certform" :rules="newrule">
+  <div>
+      <el-row type="flex" justify="center">
+      <el-col style="width:500px;">
+    <div style="margin:20px 0;">
+      <el-form status-icon label-width="140px" ref="blockChainInfoform" :model="blockChainInfoform" >
+        <el-form-item label="区块链服务器地址" prop="bcAddr">
+          <el-input size="small" v-model="blockChainInfoform.bcAddr" :placeholder="oldbcAddr"></el-input>
+        </el-form-item>
+        <el-form-item label="区块链服务器端口号" prop="bcPort">
+          <el-input size="small" v-model="blockChainInfoform.bcPort" :placeholder="oldbcPort"></el-input>
+        </el-form-item>
 
-          <el-form-item label="证书有效期" prop="expire">
-            <div class="block">
-              <el-date-picker size="small" v-model="certform.expire" type="datetime" placeholder="选择日期" value-format="yyyy-MM-dd HH:mm:ss">
-              </el-date-picker>
-            </div>
-            <!-- <el-input size="small" v-model="certform.expire"></el-input> -->
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('certform')">提交</el-button>
-            <el-button @click="resetForm('certform')">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
+        <el-form-item >
+          <div style="margin-left:20%">
+            <el-button type="primary" @click="submitForm('blockChainInfoform')">提交</el-button>
+            <el-button @click="resetForm('blockChainInfoform')">重置</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </div>
     </el-col>
-  </el-row>
+    </el-row>
+  </div>
 </template>
-<style>
-/* 下面的代码是为了搞定时间选择器的显示问题*/
-.el-time-spinner.has-seconds .el-time-spinner__wrapper:nth-child(2) {
-  margin-left: 0;
-}
-</style>
+
 <script>
 /**
- * 这个文件是全局证书配置页面
+ * 这个文件是文件系统配置页面
  */
 import Vue from 'vue'
-import {
-  Button,
-  Input,
-  Form,
-  FormItem,
-  Message,
-  DatePicker,
-  Row,
-  Col
-} from 'element-ui'
+import { Button, Input, Form, FormItem, Message, DatePicker, Row, Col, Upload } from 'element-ui'
 import * as config from '../../api/config'
 
 Vue.use(Button)
@@ -51,50 +39,103 @@ Vue.use(FormItem)
 Vue.use(DatePicker)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(Upload)
 export default {
-  data() {
+  data(){
 
     return {
-      certform: {
-        expire: ''
+      blockChainInfoform:{
+        bcAddr:null,
+        bcPort:null,
       },
-      newrule: {
-        expire: [{
-          required: true,
-          message: '请选择日期',
-          trigger: 'blur'
-        }]
-      }
+      oldbcAddr:'',
+      oldbcPort:'',
+      // newrule:{
+      //  fsId:[
+      //    { required:true, message:'请输入文件系统id', trigger:'blur'}
+      //  ],
+      //  fsName:[
+      //    { required:true, message:'请输入文件系统名称', trigger:'blur'}
+      //  ],
+      //  fsType:[
+      //    { required:true, message:'请输入文件系统类型及版本号', trigger:'blur'}
+      //  ],
+      //  mountPoint:[
+      //    { required:true, message:'请输入文件系统挂载路径', trigger:'blur'}
+      //  ],
+      //  matadatePool:[
+      //    { required:true, message:'请输入元数据池名称', trigger:'blur'}
+      //  ],
+      //  dataPools:[
+      //    { required:true, message:'请输入数据池名称', trigger:'blur'}
+      //  ],
+      //  fsIP:[
+      //    { required:true, message:'请输入文件服务器IP', trigger:'blur'}
+      //  ],
+      //  fsPort:[
+      //    { required:true, message:'请输入端口号', trigger:'blur'},
+      //    { type: 'number', message: '请输入数字', trigger: 'blur,change' }
+      //  ],
+      //  privateKey:[
+      //    { required:true, message:'请上传私钥文件', trigger:'blur'}
+      //  ],
+      //  configFile:[
+      //    { required:true, message:'请上传配置文件', trigger:'blur'}
+      //  ],
+      //  storage:[
+      //    { required:true, message:'请输入端口号', trigger:'blur'},
+      //    { type: 'number', message: '请输入数字', trigger: 'blur,change' }
+      //  ],
+      // }
     }
   },
-  methods: {
+  mounted: async function() {
+    await this.updatePage()  
+
+  },
+  methods:{
+     // 将更新整个页面的功能抽离成一个公共函数
+      async updatePage(){
+      var blockChainInfo= await config.GetblockChainInfo()
+      console.log(blockChainInfo)
+      this.oldbcAddr=blockChainInfo.bcAddr
+      this.oldbcPort= blockChainInfo.bcPort
+     
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let data = {
-            expire: this.certform.expire
+          let data_bcAddr = {
+            key:"bcAddr",
+            value:this.blockChainInfoform.bcAddr,
           }
-          // TODO 逻辑处理，根据返回结果做出相应提示再跳转
-          config.submitCertExpire(data).then(function(result) {
+          let data_bcPort ={
+            key:"bcPort",
+            value:this.blockChainInfoform.bcPort,
+          }
+
+          let final_data=[]
+          final_data.push(data_bcAddr)
+          final_data.push(data_bcPort)
+
+          config.submitData(final_data).then(function(result){
             if (result == true) {
               Message({
                 showClose: true,
-                message: '提交成功',
-                type: 'success',
-                duration: 2000
+                message:'提交成功',
+                type:'success',
+                duration:2000
               })
             }
-          }).catch((e) => {
-            Message({
-              showClose: true,
-              message: e.message,
-              type: 'error',
-              duration: 2000
+          }).catch((e)=>{
+              Message({
+                showClose: true,
+                message:e.message,
+                type:'error',
+                duration:2000
+              })
+     
             })
-                            if(e.message=="Error: 您已在另一地点登录，请重新登录！"){
-                             this.$router.push({ path: '/'})
-                            }
-          })
 
         } else {
           return false
@@ -103,7 +144,7 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
-    }
+    },
   }
 }
 </script>

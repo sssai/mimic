@@ -107,10 +107,6 @@ export default {
     // 将更新整个页面的功能抽离成一个公共函数
     async updatePage(){
       await this.$store.dispatch('getdirs', {
-        dirName:'temp',
-        user:'scott',
-        group:'group1',
-        auth:'755',
         pageSize: 10,
         currentPage: 1,
       }).catch((e)=>{
@@ -154,7 +150,7 @@ export default {
 
  //新建目录，跳转至新建目录页面
     goToNewDir() {
-      this.$router.push({ path: '/content/config/adddir' })
+      this.$router.push({ path: '/content/user/adddir' })
     },
 
     goToUpdateDir() {
@@ -169,7 +165,7 @@ export default {
       }
       let id = this.multipleSelection[0].id
       console.log(id)
-      this.$router.push({ path: '/content/config/upadatedir/' + id })
+      this.$router.push({ path: '/content/user/upadatedir/' + id })
     },
 
    async deleteDirs() {
@@ -183,19 +179,19 @@ export default {
         return false
       }
       let id = this.multipleSelection.map(({ id }) => id)
-      var username= new Array();;
+      var dirNameArray= new Array();;
 
       for (let i = 0; i < this.multipleSelection.length; i++) {
-        username.push(this.multipleSelection[i].user)
+        dirNameArray.push(this.multipleSelection[i].dirName)
       }
-      console.log(username)
-      console.log(id)
+      // console.log(username)
+      // console.log(id)
 
       // TODO 返回结果的处理
       this.$store
         .dispatch('deletedirs', {
           id,
-          username,
+          dirNameArray,
         })
         .then(() => {
           Message({

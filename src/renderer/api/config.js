@@ -170,3 +170,140 @@ export async function submitMountFS(param) {
 		throw new Error(e.toString())
 	}
 }
+
+/**
+ * @author Saisai
+ * @version 1.0.0
+ * @date    2019-06-04
+ * @param   {Object}   data 一个对象，包含下面的字段
+ * @return  {Object}        
+ * @description 查询数据库配置信息
+ */
+export async function GetdbInfo(param) {
+	try {
+		// TODO 接口格式
+		let tryd={
+		db_url:'jdbc:mysql://219.223.192.45:3306/monitor',
+		user:'monitor',			//登录名
+		password:'Pkusz11',		//登录密码
+
+		}
+		//return tryd
+		let socket = new Socket()
+		let data = {
+			type: 41,
+		}
+		socket.write(JSON.stringify(data))
+		let response = await socket.read()
+		let obj = JSON.parse(response)
+		if (obj.state == 0) {
+			return obj.dbInfo
+		} else {
+			throw new Error(obj.errormessage)
+		}
+	} catch (e) {
+		throw new Error(e.toString())
+	}
+}
+/**
+ * @author Saisai
+ * @version 1.0.0
+ * @date    2019-06-04
+ * @param   {Object}   data 一个对象，包含下面的字段
+ * @return  {Object}        
+ * @description 查询区块链服务器配置信息
+ */
+export async function GetblockChainInfo(param) {
+	try {
+		// TODO 接口格式
+		let tryd={
+		bcAddr:'219.223.195.81',
+		bcPort:'Pkusz11',			
+		}
+		//return tryd
+		let socket = new Socket()
+		let data = {
+			type: 41,
+		}
+		socket.write(JSON.stringify(data))
+		let response = await socket.read()
+		let obj = JSON.parse(response)
+		if (obj.state == 0) {
+			return obj.blockChainInfo
+		} else {
+			throw new Error(obj.errormessage)
+		}
+	} catch (e) {
+		throw new Error(e.toString())
+	}
+}
+/**
+ * @author Saisai
+ * @version 1.0.0
+ * @date    2019-06-04
+ * @param   {Object}   data 一个对象，包含下面的字段
+ * @return  {Object}        
+ * @description 查询区块链服务器配置信息
+ */
+export async function GetauthInfo(param) {
+	try {
+		// TODO 接口格式
+		let tryd={
+		nisAddr:'219.223.195.81',
+		userName:'root',	
+		shellPwd:'Pkusz11',	
+		fileName:'UserAuthorityRenew',
+		filePath:'/home/mdfs/',
+		userDirFile:'UserDirectoryRenew',
+        userFilePath:'/home/mdfs/',
+        userDir:'/mnt/cephfs/'
+		}
+		//return tryd
+		let socket = new Socket()
+		let data = {
+			type: 41,
+		}
+		socket.write(JSON.stringify(data))
+		let response = await socket.read()
+		let obj = JSON.parse(response)
+		if (obj.state == 0) {
+			return obj.authInfo
+		} else {
+			throw new Error(obj.errormessage)
+		}
+	} catch (e) {
+		throw new Error(e.toString())
+	}
+}
+/**
+ * @author saisai
+ * @version 
+ * @date    2019-06-04
+ * @param   {Object}   data 一个对象，包含下面的字段
+ * @return  {Boolean}        true为正确提交，报错则不正确
+ * @description 修改多个键值对，包括修改整个文件
+ */
+export async function submitData(param) {
+	try {
+		console.log(param)
+		//return true
+		let socket = new Socket()
+		let data = {
+			type: 43,
+			content: param,         
+		}
+		
+		socket.write(JSON.stringify(data))
+		
+		let response = await socket.read()
+		
+		let obj = JSON.parse(response)
+		if (obj.state == 0) {
+			return true
+		} else {
+			throw new Error(obj.errormessage)
+		}
+	} catch (e) {
+		throw new Error(e.toString())
+	}
+}

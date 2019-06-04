@@ -188,7 +188,7 @@ export default {
         let select_id= rows[index].id
         let select_group= rows[index].group
    
-          console.log(select_group)
+        console.log(select_group)
         authGroup.DeleteGroup2(select_id,select_group)
         .then(() => {
           rows.splice(index, 1);
@@ -257,7 +257,8 @@ export default {
         }).catch(() => {
           Message({
             type: 'info',
-            message: '取消输入'
+            message: '取消输入',
+            duration: 2000
           });
         });
      },
@@ -322,7 +323,7 @@ export default {
         			if(value.userName==v.userName){
         				row_index=i
         				let select_user= this.tableData2[row_index].userName
-        				authGroup.submitGroupManage(select_user,this.select_group,'del')
+        				authGroup.DeleteUserFromGroup(select_user,this.select_group,'del')
                         .then(() => {
                             this.deleteRow(row_index,this.tableData2) //执行对应行相关操作
                             //将选择对象添加至用户列表中
@@ -372,7 +373,7 @@ export default {
         			if(value.userName==v.userName){
         				row_index=i
         				let select_user= this.tableData3[row_index].userName
-        				authGroup.submitGroupManage(select_user,this.select_group,'add')
+        				authGroup.AddUserToGroup(select_user,this.select_group)
                         .then(() => {
                       this.deleteRow(row_index,this.tableData3) //执行对应行相关操作
                       //将选择对象添加至组内成员表中

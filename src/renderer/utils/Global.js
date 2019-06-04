@@ -14,6 +14,9 @@ export const RESET_PSW = '/resetpassword'
 // 锁定页面
 export const LOCK_PAGE = "/lockpage"
 
+// //CM系统配置文件管理页面
+// export const CMCONFIG="/content/cmconfig"
+
 // FS用户管理
 export const FS_USER_MANAGE = {
   indexpage: "/content/user",
@@ -29,6 +32,8 @@ export const FS_USER_MANAGE = {
   newuser: "/content/user/newuser",
   // FS用户管理--新建用户
   updateuser: "/content/updateuser/",
+  // FS用户管理--目录管理
+  creatdir: "/content/user/creatdir",
 }
 
 
@@ -43,8 +48,7 @@ export const CM_CONFIG = {
   globalpara: "/content/config/globalpara",
   // 配置管理--系统功能结构
   systemstructure: "/content/config/systemstructure",
-  // 配置管理--目录管理
-  creatdir: "/content/config/creatdir",
+
 }
 
 // 监控视图
@@ -120,4 +124,5 @@ export default {
   AUTH,
   CONSOLE_CONFIG,
   REPORT_FORM,
+
 }

@@ -6,30 +6,31 @@
       <i class="el-icon-menu"></i>
       <span slot="title">数据监控</span>
     </el-menu-item>
-<!--     <el-submenu :index="fsUserManage" v-if="getFsUserManagePerminssion">
+
+    <el-submenu :index="fsUserManage" v-if="getFsUserManagePerminssion">
       <template slot='title'>
         <i class="el-icon-document"></i>
         <span>用户管理</span>
       </template>
       <el-menu-item :index="userlist" v-if="getPermissionTree.user_manage">用户管理</el-menu-item>
       <el-menu-item :index="groupmanage" v-if="getPermissionTree.group_manage">组管理</el-menu-item>
-      <el-menu-item :index="changepassword" v-if="getPermissionTree.user_pwd_init">用户密码重置</el-menu-item>
-      <el-menu-item :index="useraudit" v-if="getPermissionTree.user_check">用户审核</el-menu-item>
-    </el-submenu> -->
+      <el-menu-item :index="creatdir" v-if="getPermissionTree.director_manage">用户目录管理</el-menu-item>
+  <!--     <el-menu-item :index="changepassword" v-if="getPermissionTree.user_pwd_init">用户密码重置</el-menu-item> -->
+<!--       <el-menu-item :index="useraudit" v-if="getPermissionTree.user_check">用户审核</el-menu-item> -->
+    </el-submenu>
 
     <!-- 云平台版本暂时不需要，先隐藏该路径 -->
-    <!-- <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
+    <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
       <template slot='title'>
         <i class="el-icon-setting"></i>
-        <span>配置管理</span>
+        <span>CM配置管理</span>
       </template>
-      <el-menu-item :index="filesystem" v-if="getPermissionTree.fs_manage">文件系统配置</el-menu-item> -->
-    <!-- <el-menu-item :index="mountnode">挂载节点配置</el-menu-item> -->
-    <!-- <el-menu-item :index="cert" v-if="getPermissionTree.global_cert_manage">全局证书配置</el-menu-item>
-      <el-menu-item :index="globalpara" v-if="getPermissionTree.global_param_manage">全局参数配置</el-menu-item>
-      <el-menu-item :index="systemstructure" v-if="getPermissionTree.system_func_structure">系统功能结构</el-menu-item>
-      <el-menu-item :index="creatdir" v-if="getPermissionTree.director_manage">目录管理</el-menu-item>
-    </el-submenu> -->
+      <el-menu-item :index="filesystem" v-if="getPermissionTree.fs_manage">数据库配置信息</el-menu-item>
+    <el-menu-item :index="cert" v-if="getPermissionTree.global_cert_manage">区块链服务器配置信息</el-menu-item>
+      <el-menu-item :index="globalpara" v-if="getPermissionTree.global_param_manage">用户权限配置信息</el-menu-item>
+<!--       <el-menu-item :index="systemstructure" v-if="getPermissionTree.system_func_structure">系统功能结构</el-menu-item>
+      <el-menu-item :index="creatdir" v-if="getPermissionTree.director_manage">目录管理</el-menu-item> -->
+    </el-submenu>
 
     <!-- 云平台版本暂时不需要，先隐藏该路径 -->
     <!-- <el-submenu :index="monitor" v-if="getMonitorPerminssion">
@@ -60,6 +61,10 @@
       <i class="el-icon-document"></i>
       <span slot="title">系统日志查询</span>
     </el-menu-item>
+<!--     <el-menu-item :index="filesystem">
+      <i class="el-icon-document"></i>
+      <span slot="title">CM系统配置文件管理</span>
+    </el-menu-item> -->
 <!--     <el-submenu :index="reportform" v-if="getReportFormPerminssion">
       <template slot='title'>
         <i class="el-icon-download"></i>
@@ -113,12 +118,12 @@ export default {
       groupmanage: global_.FS_USER_MANAGE.groupmanage,
       changepassword: global_.FS_USER_MANAGE.changepassword,
       useraudit: global_.FS_USER_MANAGE.useraudit,
+      creatdir: global_.FS_USER_MANAGE.creatdir,
       cmConfig: global_.CM_CONFIG.indexpage,
       filesystem: global_.CM_CONFIG.filesystem,
       cert: global_.CM_CONFIG.cert,
       globalpara: global_.CM_CONFIG.globalpara,
       systemstructure: global_.CM_CONFIG.systemstructure,
-      creatdir: global_.CM_CONFIG.creatdir,
       monitor: global_.MONITOR.indexpage,
       fseorror: global_.MONITOR.fseorror,
       nodestatus: global_.MONITOR.nodestatus,
@@ -153,14 +158,15 @@ export default {
       return this.getPermissionTree.user_manage &&
         this.getPermissionTree.group_manage &&
         this.getPermissionTree.user_pwd_init &&
-        this.getPermissionTree.user_check
+        this.getPermissionTree.user_check&&
+        this.getPermissionTree.director_manage
     },
     getCmConfigPerminssion() {
       return this.getPermissionTree.fs_manage &&
         this.getPermissionTree.global_cert_manage &&
         this.getPermissionTree.global_param_manage &&
-        this.getPermissionTree.system_func_structure &&
-        this.getPermissionTree.director_manage
+        this.getPermissionTree.system_func_structure 
+        // this.getPermissionTree.director_manage
     },
     getMonitorPerminssion() {
       return this.getPermissionTree.fs_monitor &&

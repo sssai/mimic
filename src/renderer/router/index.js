@@ -15,9 +15,6 @@ import FileSystem from '@/components/ConfigPage/FileSystem'
 import Cert from '@/components/ConfigPage/Cert'
 import GlobalPara from '@/components/ConfigPage/GlobalPara'
 import MountNode from '@/components/ConfigPage/MountNode'
-import CreatDir from '@/components/ConfigPage/CreatDir'
-import AddDir from '@/components/ConfigPage/AddDir'
-import UpdateDir from '@/components/ConfigPage/UpdateDir'
 import SystemStructure from '@/components/ConfigPage/SystemStructure'
 
 
@@ -48,6 +45,9 @@ import GroupManagePage from '@/components/UserManagePage/GroupManagePage'
 import ChangePassword from '@/components/UserManagePage/ChangePassword'
 import NewUserPage from '@/components/UserManagePage/NewUserPage'
 import UserAudit from '@/components/UserManagePage/UserAudit'
+import CreatDir from '@/components/UserManagePage/CreatDir'
+import AddDir from '@/components/UserManagePage/AddDir'
+import UpdateDir from '@/components/UserManagePage/UpdateDir'
 
 import Summary from '@/components/Summary'
 
@@ -65,6 +65,8 @@ import ChangeCurUserPwd from '@/components/ConsoleConfig/ChangeCurUserPwd'
 import ReportForm from '@/components/ReportForm'
 import FSSafe from '@/components/ReportForm/FSSafe'
 
+// import CMConfig from '@/components/CMConfig'
+
 
 Vue.use(Router)
 
@@ -81,6 +83,14 @@ let router = new Router({
               title: ['概览']
             }
       		},
+          // //CM系统配置文件管理
+          // {
+          //   path:'cmconfig',
+          //   component: CMConfig,
+          //   meta:{
+          //     title: ['CM系统配置']
+          //   }
+          // },
       		{ /*FS用户管理*/
       			path:'user',
       			component: UserManagePage,
@@ -116,6 +126,24 @@ let router = new Router({
                 meta:{
                   title: ['FS用户管理', '新建用户']}
           		},
+              { /*目录管理*/
+                path:'creatdir',
+                component:CreatDir,
+                meta:{
+                  title: ['FS用户管理', '目录管理']}
+              },
+              {
+                path:'adddir',
+                component:AddDir,
+                meta:{
+                  title: ['FS用户管理', '新增文件夹']}
+              },
+              {
+                path:'upadatedir/:id',
+                component:UpdateDir,
+                meta:{
+                  title: ['FS用户管理', '更新文件夹']}
+              },
       			]
       		},
       		{ /*配置管理*/
@@ -127,19 +155,19 @@ let router = new Router({
       					path:'filesystem',
       					component:FileSystem,
                 meta:{
-                  title: ['配置管理', '文件系统配置']}
+                  title: ['配置管理', '数据库配置信息']}
       				},
       				{ /*全局证书配置*/
       					path:'cert',
       					component:Cert,
                 meta:{
-                  title: ['配置管理', '全局证书配置']}
+                  title: ['配置管理', '区块链服务器配置信息']}
       				},
       				{ /*全局参数配置*/
       					path:'globalpara',
       					component:GlobalPara,
                 meta:{
-                  title: ['配置管理', '全局参数配置']}
+                  title: ['配置管理', '用户权限配置信息']}
       				},
       				//
       				{ /*系统功能结构*/
@@ -148,24 +176,24 @@ let router = new Router({
                 meta:{
                   title: ['配置管理', '系统功能结构']}
       				},
-      				{ /*目录管理*/
-      					path:'creatdir',
-      					component:CreatDir,
-                meta:{
-                  title: ['配置管理', '目录管理']}
-      				},
-      				{
-      					path:'adddir',
-      					component:AddDir,
-                meta:{
-                  title: ['配置管理', '新增文件夹']}
-      				},
-      				{
-      					path:'upadatedir/:id',
-      					component:UpdateDir,
-                meta:{
-                  title: ['配置管理', '更新文件夹']}
-      				},
+      				// { /*目录管理*/
+      				// 	path:'creatdir',
+      				// 	component:CreatDir,
+          //       meta:{
+          //         title: ['配置管理', '目录管理']}
+      				// },
+      				// {
+      				// 	path:'adddir',
+      				// 	component:AddDir,
+          //       meta:{
+          //         title: ['配置管理', '新增文件夹']}
+      				// },
+      				// {
+      				// 	path:'upadatedir/:id',
+      				// 	component:UpdateDir,
+          //       meta:{
+          //         title: ['配置管理', '更新文件夹']}
+      				// },
               {
                 path:'downloadfile/:download_info',
                 component:DownloadErrorFile,
@@ -237,9 +265,10 @@ let router = new Router({
       			]
       		},
       		{
-      			path:'updateuser/:id',
+      			path:'updateuser/:param',
       			component: UpdateUserPage
       		},
+
       		{ /*异常管理*/
       			path:'auth',
       			component: AuthManagePage,

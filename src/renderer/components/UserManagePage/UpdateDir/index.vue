@@ -46,7 +46,7 @@ import {
 	Row,
 	Col
 } from 'element-ui'
-import * as authGroup from '../../api/authGroup'
+import * as authGroup from '../../../api/authGroup'
 
 
 Vue.use(Button)

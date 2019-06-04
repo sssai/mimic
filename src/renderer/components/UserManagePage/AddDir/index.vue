@@ -80,7 +80,7 @@ import {
 	CheckboxGroup,
 
 } from 'element-ui'
-import * as authGroup from '../../api/authGroup'
+import * as authGroup from '../../../api/authGroup'
 
 Vue.use(Button)
 Vue.use(Input)
@@ -137,8 +137,8 @@ export default {
 					{ required:true, message:'请输入用户组名称', trigger:'blur'}
 				],
 				auth:[
-					{ required:true, message:'请输入该目录权限', trigger:'blur'},
-					{ type: 'number', message: '请输入数字', trigger: 'blur,change' }
+					{ message:'请输入该目录权限', trigger:'blur'},
+					// { type: 'number', message: '请输入数字', trigger: 'blur,change' }
 				],
 			}
 		}
@@ -154,8 +154,9 @@ export default {
 						dirName: this.dirform.dirName,
 						user: this.dirform.user,
 						group: this.dirform.group,
-						auth: this.dirform.auth
+						auth: this.auth
 					}
+					console.log("data",data)
 					// TODO 逻辑处理，根据返回结果做出相应提示再跳转
 					authGroup
 						.submitAuth(data)
@@ -215,6 +216,7 @@ export default {
 
 			this.auth=this.checkeduser+this.checkedgroup+this.checkedother
 			this.auth=parseInt(this.auth)
+			console.log(this.auth)
 
 
 			// console.log(this.auth)
