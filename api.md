@@ -1045,6 +1045,452 @@ resp{
 ]
 }
 
+//CM系统配置文件管理
+//1、	查询配置文件信息
+前端CM：
+req{
+	“type”:41（int型）
+}
 
+CM前端：
+resp{
+	“type”:41（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+	“fsStatusJudge”:{  //监控fs状态时，判决器每秒往数据库中插入数据，CM需要判断fs的状态是否运行正常，此字段完成此工作。如果timeSplit=10，当CM判断已经过了10秒，fs仍然没有往数据库中插入数据，那么就会认为该fs已经宕机，否则fs正常运行。
+		“timeSplit”:”10”
+},
+	“dbInfo”:	//数据库配置信息
+	{
+		“db_url”:“jdbc:mysql://219.223.192.45:3306/monitor”，
+	“user”: “monitor”			//登录名
+	“password”: “Pkusz11”		//登录密码
+},
+	“blockChainInfo”://区块链服务器配置信息
+		{
+	“bcAddr”: “219.223.195.81”	//区块链服务器地址
+	“bcPort”: “Pkusz11”		//区块链服务器端口号
+},
+	“authInfo”:{ //用户权限配置信息
+			“nisAddr”: “219.223.196.53”		//运行的脚本所在服务器地址
+	“userName”: “root”			//运行的脚本所在服务器的用户名
+	“shellPwd”: “Pkusz11”			//密码
+	“fileName”: “UserAuthorityRenew”		// UserAuthorityRenew脚本名
+“filePath”: “/home/mdfs/”				//服务器中UserAuthorityRenew脚本所在目录
+	“userDirFile”: “UserDirectoryRenew”		// UserDirectoryRenew脚本名
+“userFilePath”: “/home/mdfs/”			//UserDirectoryRenew脚本在服务器上的目录
+	“userDir”: “/mnt/cephfs/”				//创建用户目录所在的根目录
+}”
+}
+
+//2、	修改配置文件信息
+可以修改单个键值对、多个键值对。
+1）修改单个键值对
+前端CM：
+req{
+	“type”:42（int型）
+	“key”:”name”
+	“value”:”yhy”
+}
+CM前端：
+resp{
+	“type”:42（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+}
+2) 修改多个键值对，包括修改整个文件
+前端CM：
+req{
+	“type”:43（int型）
+	“content” :[
+	{
+			“key”:”name”
+			“value”:”yhy”
+},
+{
+			“key”:”name”
+			“value”:”yhy”
+}
+
+]
+}
+
+CM前端：
+resp{
+	“type”:43（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+}
+
+//一、	用户管理
+1.1 查询所有用户信息
+Req{
+	“type” :   37  int 
+}
+Resp{
+	“type” : 37  int
+	“state”:””	string
+	“errorMessage”:  string
+	“users”:[
+		{
+			“name”:””		//用户名
+			“ip”:				//终端ip
+			“mac”:			//终端mac
+}
+]
+}
+1.2 查询某个用户信息
+Req{
+	“type” :   38  int 
+	“name”:””
+}
+Resp{
+	“type” : 38  int
+	“state”:””	string
+	“errorMessage”:  string
+	“name”:””		//用户名
+	“ip”:				//终端ip
+	“mac”:			//终端mac
+}
+1.3 修改某个用户信息
+Req{
+	“type” :   39  int 
+	“name”:””
+	“ip”:				//终端ip
+	“mac”:			//终端mac
+}
+Resp{
+	“type” : 39  int
+	“state”:””	string
+	“errorMessage”:  string
+}
+1.4 删除某个用户信息
+Req{
+	“type” :   40  int 
+	“name”:””
+}
+Resp{
+	“type” : 40  int
+	“state”:””	string
+	“errorMessage”:  string
+}
+
+//二、	用户组管理
+2.1 添加
+Req{
+	“type” :   26  int
+	“ugroup”:	string			//目录名
+}
+Resp{
+	“type” : 26  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+}
+
+2.2 修改
+Req{
+	“type” :   27  int
+	“id”:	string					//目录id
+	“ugroup”:	string			//目录名
+}
+Resp{
+	“type” : 26  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+}
+2.3 删除
+Req{
+	“type” :   28  int
+	“id”:	string					//目录id
+	“ugroup”:	string			//目录名
+}
+Resp{
+	“type” : 28  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+}
+2.4 查询
+Req{
+	“type” :   29  int 
+}
+Resp{
+	“type” : 29  int
+	“state”:””	string
+	“errorMessage”:  string
+	“groups”:[
+	{
+	“id”:””		//用户组id
+	“group”:		//用户组名
+}
+]
+}
+//三、	用户目录管理
+3.1 添加
+Req{
+	“type” :  30  int
+“dirName”:string
+“user” : “”string
+“group” : “” string
+“auth” : “”string
+}
+Resp{
+	“type” : 30  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+
+}
+
+3.2 删除
+Req{
+	“type” :  31  int
+“dirId”:string			//目录id
+“dirName”:			//目录名
+}
+Resp{
+	“type” : 31  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+}
+
+3.3 查询
+Req{
+	“type” :  32  int
+	“pageSize”:	int
+	“currentPage”:	int
+}
+Resp{
+	“type” : int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+	“pageSize”: int
+	“currentPage”: int
+	“total” : int
+	“userDir”:[
+		{
+	“id” : string			//目录id
+	“dirName”:string		//目录名
+	“user” : “”string		//用户名
+	“group” : “” string		//用户组名
+	“auth” : “”string		//目录权限
+}
+……
+]
+}
+3.4 修改
+Req{
+	“type” :   33  int
+	“id”:	string			//目录string
+	“path”:””				//用户目录原路径，不包含目录名 string
+	“dirName”:””			//原目录名 string
+	“newPath”:””			//新用户目录路径，不包含目录名 string
+	“newDirName”:””		//新目录名 string
+}
+Resp{
+	“type” : 33  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+}
+//四、	用户组中的用户管理
+4.1 查询
+查询在该组内用户和不在该组内用户。
+Req{
+	“type” :   34  int
+	“groupName”:	string			//用户组string
+}
+Resp{
+	“type” : 34  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+	“groupUsers”:[				//组内用户
+	{
+	“userName”:””		//用户名
+}
+],
+“notGroupUsers”:[				//非组内用户
+	{
+	“userName”:””		//用户名
+}
+]
+}
+4.2 添加
+向某个组中添加用户。
+Req{
+	“type” :   35  int
+	“userName”:””			//用户名
+	“groupName”:””			//用户组string
+}
+
+Resp{
+	“type” : 35  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+}
+
+4.3 删除
+从某个组中删除用户
+Req{
+	“type” :   36  int
+	“userName”:””			//用户名
+	“groupName”:””			//用户组string	
+}
+
+Resp{
+	“type” : 36  int
+	“state”:””	string				//0：操作成功，1：操作失败
+	“errorMessage”:  string		//操作失败的错误信息
+}
+
+用户登录状态监控
+1、所有用户的查询：
+查询所有用户的登录、注销日志
+前端CM：
+req{
+	“type”:44（int型）
+    “pageSize”:”5”,
+	“currentPage”:”2”		//从1开始
+
+}
+
+CM前端：
+resp{
+	“type”:44（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+“total”: 4			//int  总数量
+	“currentPage”: 1	//int   当前页
+	“userLogInfo”:[
+	{
+		“userName”:“yhy”，						//用户名
+	“loginTime”: “2019-06-05 09:42:03”			//登录时间
+	“logoutTime”: “2019-06-06 09:42:03”		//注销时间
+	“ipAddr” : “219.223.197.76”					//用户登录机器的IP地址
+}，
+{
+		“userName”:“yhy”，						//用户名
+	“loginTime”: “2019-06-05 09:42:03”			//登录时间
+	“logoutTime”: “2019-06-06 09:42:03”		//注销时间
+	“ipAddr” : “219.223.197.76”					//用户登录机器的IP地址
+}
+]
+}
+
+
+2、查询单个用户的信息
+提供三种查询：
+1）	根据userName查询
+2）	根据userName和startTime查询
+3）	根据userName、startTime和endTime查询
+根据三种查询方式，前端发送请求报文
+前端CM：
+req{
+	“type”:45（int型）
+	“userName”:”yhy”
+	“startTime”:” 2019-06-05 09:42:03”
+	“endTime”:” 2019-06-05 09:42:03”
+	“pageSize”:”5”,
+	“currentPage”:”2”		//从1开始
+}
+
+CM前端：
+
+resp{
+	“type”:45（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+	“total”: 4			//int  总数量
+	“currentPage”: 1	//int   当前页
+	“userLogInfo”:[
+	{
+		“userName”:“yhy”，						//用户名
+	“loginTime”: “2019-06-05 09:42:03”			//登录时间
+	“logoutTime”: “2019-06-06 09:42:03”		//注销时间
+	“ipAddr” : “219.223.197.76”					//用户登录机器的IP地址
+}，
+{
+		“userName”:“yhy”，						//用户名
+	“loginTime”: “2019-06-05 09:42:03”			//登录时间
+	“logoutTime”: “2019-06-06 09:42:03”		//注销时间
+	“ipAddr” : “219.223.197.76”					//用户登录机器的IP地址
+}
+]
+}
+一、CM配置信息管理
+CM系统配置文件管理：
+1、	查询配置文件信息
+前端CM：
+req{
+	“type”:41（int型）
+}
+
+CM前端：
+resp{
+	“type”:41（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+	“fsStatusJudge”:{  //监控fs状态时，判决器每秒往数据库中插入数据，CM需要判断fs的状态是否运行正常，此字段完成此工作。如果timeSplit=10，当CM判断已经过了10秒，fs仍然没有往数据库中插入数据，那么就会认为该fs已经宕机，否则fs正常运行。
+		“timeSplit”:”10”
+},
+	“dbInfo”:	//数据库配置信息
+	{
+		“db_url”:“jdbc:mysql://219.223.192.45:3306/monitor”，
+	“user”: “monitor”			//登录名
+	“password”: “Pkusz11”		//登录密码
+},
+	“blockChainInfo”://区块链服务器配置信息
+		{
+	“bcAddr”: “219.223.195.81”	//区块链服务器地址
+	“bcPort”: “Pkusz11”		//区块链服务器端口号
+},
+	“authInfo”:{ //用户权限配置信息
+			“nisAddr”: “219.223.196.53”		//运行的脚本所在服务器地址
+	“userName”: “root”			//运行的脚本所在服务器的用户名
+	“shellPwd”: “Pkusz11”			//密码
+	“fileName”: “UserAuthorityRenew”		// UserAuthorityRenew脚本名
+“filePath”: “/home/mdfs/”				//服务器中UserAuthorityRenew脚本所在目录
+	“userDirFile”: “UserDirectoryRenew”		// UserDirectoryRenew脚本名
+“userFilePath”: “/home/mdfs/”			//UserDirectoryRenew脚本在服务器上的目录
+	“userDir”: “/mnt/cephfs/”				//创建用户目录所在的根目录
+}”
+}
+
+
+2、	修改配置文件信息
+可以修改单个键值对、多个键值对。
+1）修改单个键值对
+前端CM：
+req{
+	“type”:42（int型）
+	“key”:”name”
+	“value”:”yhy”
+}
+CM前端：
+resp{
+	“type”:42（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+}
+2) 修改多个键值对，包括修改整个文件
+前端CM：
+req{
+	“type”:43（int型）
+	“content” :[
+	{
+			“key”:”name”
+			“value”:”yhy”
+},
+{
+			“key”:”name”
+			“value”:”yhy”
+}
+
+]
+}
+
+CM前端：
+resp{
+	“type”:43（int型）
+	“state”:”” String型
+	“errorMessage”:”” String型
+}
 
 ```

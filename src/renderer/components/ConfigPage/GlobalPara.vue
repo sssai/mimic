@@ -137,6 +137,15 @@ export default {
 	 		this.olduserDirFile=authInfo.userDirFile
 	 		this.olduserFilePath=authInfo.userFilePath
 	 		this.olduserDir=authInfo.userDir
+
+	 		this.authInfoform.nisAddr=authInfo.nisAddr
+	 		this.authInfoform.userName= authInfo.userName
+	 		this.authInfoform.shellPwd=authInfo.shellPwd
+	 		this.authInfoform.fileName=authInfo.fileName
+	 		this.authInfoform.filePath=authInfo.filePath
+	 		this.authInfoform.userDirFile=authInfo.userDirFile
+	 		this.authInfoform.userFilePath=authInfo.userFilePath
+	 		this.authInfoform.userDir=authInfo.userDir
 	 	},
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {

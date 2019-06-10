@@ -15,11 +15,9 @@
       <el-menu-item :index="userlist" v-if="getPermissionTree.user_manage">用户管理</el-menu-item>
       <el-menu-item :index="groupmanage" v-if="getPermissionTree.group_manage">组管理</el-menu-item>
       <el-menu-item :index="creatdir" v-if="getPermissionTree.director_manage">用户目录管理</el-menu-item>
-  <!--     <el-menu-item :index="changepassword" v-if="getPermissionTree.user_pwd_init">用户密码重置</el-menu-item> -->
-<!--       <el-menu-item :index="useraudit" v-if="getPermissionTree.user_check">用户审核</el-menu-item> -->
     </el-submenu>
 
-    <!-- 云平台版本暂时不需要，先隐藏该路径 -->
+
     <el-submenu :index="cmConfig" v-if="getCmConfigPerminssion">
       <template slot='title'>
         <i class="el-icon-setting"></i>
@@ -30,6 +28,15 @@
       <el-menu-item :index="globalpara" v-if="getPermissionTree.global_param_manage">用户权限配置信息</el-menu-item>
 <!--       <el-menu-item :index="systemstructure" v-if="getPermissionTree.system_func_structure">系统功能结构</el-menu-item>
       <el-menu-item :index="creatdir" v-if="getPermissionTree.director_manage">目录管理</el-menu-item> -->
+    </el-submenu>
+
+    <el-submenu :index="log">
+      <template slot='title'>
+        <i class="el-icon-document"></i>
+        <span>日志信息查询</span>
+      </template>
+      <el-menu-item :index="systemlogdetail">系统日志查询</el-menu-item>
+      <el-menu-item :index="userloginlog">用户登录状态日志查询</el-menu-item>
     </el-submenu>
 
     <!-- 云平台版本暂时不需要，先隐藏该路径 -->
@@ -57,10 +64,10 @@
       <i class="el-icon-info"></i>
       <span slot="title">异常信息查询</span>
     </el-menu-item>
-    <el-menu-item :index="systemlog">
+<!--     <el-menu-item :index="systemlog">
       <i class="el-icon-document"></i>
       <span slot="title">系统日志查询</span>
-    </el-menu-item>
+    </el-menu-item> -->
 <!--     <el-menu-item :index="filesystem">
       <i class="el-icon-document"></i>
       <span slot="title">CM系统配置文件管理</span>
@@ -145,6 +152,10 @@ export default {
       reportform: global_.REPORT_FORM.indexpage,
       fssafe: global_.REPORT_FORM.fssafe,
       systemlog: global_.AUTH.systemlog,
+
+      log: global_.LOG.indexpage,
+      systemlogdetail: global_.LOG.systemlogdetail,
+      userloginlog: global_.LOG.userloginlog,
     }
   },
   mounted: function() {

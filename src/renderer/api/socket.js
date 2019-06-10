@@ -15,8 +15,8 @@ console.log("【本地测试】" + type.LOCAL_TEST);
 //   }
 // } else {
 configObj = {
-  hostBackup: '219.223.196.53', //外网ip 219.223.192.6
-  host: '219.223.196.53' // 内网ip 172.18.1.33
+  hostBackup: '219.223.197.76', //外网ip 219.223.192.6
+  host: '219.223.197.76' // 内网ip 172.18.1.33
   /*host:'0.0.0.0',
  			hostBackup:'0.0.0.0'*/
 }
@@ -103,24 +103,42 @@ class Socket {
    * @param   {String}   data 需要发送的数据
    * @return  {null}        null
    */
+  // write(data) {
+  //   const buf = Buffer.from(data)
+  //   // 获取要传输的字符串长度
+  //   let num = buf.length
+  //   // 构建要生成buffer的数组，会往数组头部加4位数字
+  //   let arr = []
+  //   arr.push(num / 16581375)
+  //   num = num % 16581375
+  //   arr.push(num / 65025)
+  //   num = num % 65025
+  //   arr.push(num / 255)
+  //   num = num % 255
+  //   arr.push(num)
+  //   let buf2 = Buffer.from(arr)
+  //   let buf3 = Buffer.concat([buf2, buf])
+  //   this._socket.write(buf3)
+  //   //console.log(buf3)
+  // }
   write(data) {
     const buf = Buffer.from(data)
     // 获取要传输的字符串长度
-    let num = buf.length
-    // 构建要生成buffer的数组，会往数组头部加4位数字
+    let bufLen = (buf.length).toString(16)
+    // 将前4字节的长度在前面用0补齐
+    while (bufLen.length - 8 < 0) {
+      bufLen = "0" + bufLen
+    }
     let arr = []
-    arr.push(num / 16581375)
-    num = num % 16581375
-    arr.push(num / 65025)
-    num = num % 65025
-    arr.push(num / 255)
-    num = num % 255
-    arr.push(num)
+    for (let i = 0; i < 8; i = i+2) {
+      // 把每个字节的string转为16进制的number
+      arr.push(parseInt("0x" + bufLen.substring(i, i+2)))
+    }
     let buf2 = Buffer.from(arr)
     let buf3 = Buffer.concat([buf2, buf])
     this._socket.write(buf3)
-    //console.log(buf3)
   }
+  
   /**
    * @author Craig
    * @version 1.0.0

@@ -194,6 +194,7 @@ export async function GetdbInfo(param) {
 			type: 41,
 		}
 		socket.write(JSON.stringify(data))
+		console.log(JSON.stringify(data))
 		let response = await socket.read()
 		let obj = JSON.parse(response)
 		if (obj.state == 0) {
@@ -293,6 +294,7 @@ export async function submitData(param) {
 			content: param,         
 		}
 		
+		console.log(111,JSON.stringify(data))
 		socket.write(JSON.stringify(data))
 		
 		let response = await socket.read()

@@ -106,6 +106,11 @@ export default {
 	 		this.oldpassword=dbInfo.password
 	 		this.olduser= dbInfo.user
 	 		this.olddb_url=dbInfo.db_url
+
+	 		this.dbInfoform.db_url=dbInfo.db_url
+	 		this.dbInfoform.user=dbInfo.user
+	 		this.dbInfoform.password=dbInfo.password
+
 	 	},
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {

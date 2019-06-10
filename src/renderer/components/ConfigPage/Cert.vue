@@ -100,6 +100,9 @@ export default {
       console.log(blockChainInfo)
       this.oldbcAddr=blockChainInfo.bcAddr
       this.oldbcPort= blockChainInfo.bcPort
+
+      this.blockChainInfoform.bcAddr=blockChainInfo.bcAddr
+      this.blockChainInfoform.bcPort=blockChainInfo.bcPort
      
     },
     submitForm(formName) {

@@ -10,6 +10,10 @@ import LoginPage from '@/components/LoginPage'
 // import NewUserPage from '@/components/NewUserPage'
 import UpdateUserPage from '@/components/UpdateUserPage'
 
+import LogPage from '@/components/LogPage'
+import SystemLogDetail from '@/components/LogPage/SystemLogDetail'
+import UserLoginLog from '@/components/LogPage/UserLoginLog'
+
 import ConfigPage from '@/components/ConfigPage'
 import FileSystem from '@/components/ConfigPage/FileSystem'
 import Cert from '@/components/ConfigPage/Cert'
@@ -227,6 +231,25 @@ let router = new Router({
       				},
       			]
       		},
+          { /*日志信息相关*/
+            path:'log',
+            component: LogPage,
+            // vue-router的嵌套路由
+            children:[
+              { /*系统日志查询*/
+                path:'systemlogdetail',
+                component:SystemLogDetail,
+                meta:{
+                  title: ['日志查询', '系统日志查询']}
+              },
+              { /*用户登录状态日志查询*/
+                path:'userloginlog',
+                component:UserLoginLog,
+                meta:{
+                  title: ['日志查询', '用户登录状态日志查询']}
+              },
+            ]
+          },
       		{ /*挂载管理*/
       			path:'mounter',
       			component: MounterPage,

@@ -88,6 +88,13 @@ export const AUTH = {
   systemlog:"/content/auth/systemlog"
 }
 
+//日志查询
+export const LOG ={
+  indexpage: "/content/log",
+  systemlogdetail:"/content/log/systemlogdetail",
+  userloginlog: "/content/log/userloginlog"
+}
+
 // 控制台设置
 export const CONSOLE_CONFIG = {
   indexpage: "/content/consoleconfig",
@@ -124,5 +131,6 @@ export default {
   AUTH,
   CONSOLE_CONFIG,
   REPORT_FORM,
+  LOG,
 
 }
