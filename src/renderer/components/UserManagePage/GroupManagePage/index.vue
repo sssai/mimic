@@ -34,6 +34,7 @@
       fixed="right"
       label="操作"
       width="120">
+      
       <template slot-scope="scope">
         <el-button
           @click.native.prevent="DeleteGroup(scope.$index, tableData1)"
@@ -463,7 +464,7 @@ export default {
   background-color: #f9fafc;
 }
 .btn-operation{
-	position: absolute;
+	
 	margin-top: 3px;
 
 	z-index: 50;

@@ -271,7 +271,7 @@ export async function GetGroups() {
         	group:"xxx"
         },
         ]
-        //return datatry
+        return datatry
 
 		let socket = new Socket()
 		let data = {
