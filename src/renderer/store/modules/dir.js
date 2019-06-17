@@ -22,6 +22,7 @@ const getters = {
 }
 const mutations = {
 	[types.DELETE_DIRS](state, payload) {
+		//console.log(777,payload)
 		state.dirs = [
 			...state.dirs.filter(value => {
 				return !payload.id.includes(value.id)
@@ -29,21 +30,24 @@ const mutations = {
 		]
 	},
 	[types.GET_DIRS](state, payload) {
-		state.dirs = payload.dirs
+		state.dirs = payload
+		//console.log("state.dirs",state.dirs);
 	}
 }
 
 const actions = {
 	async deletedirs({ commit }, payload) {
-		let result = await authGroup.DeleteDirs(payload.id,payload.username)
+		console.log("deletedirs",payload);
+		let result = await authGroup.DeleteDirs(payload.id,payload.dirNameArray)
 		commit(types.DELETE_DIRS, payload)
 	},
 	async getdirs({ commit }, payload) {
 		let data = await authGroup.GetDirs(payload)
-		// console.log(payload);
+	    //console.log("getdirs",payload);
 		let datanew = data || {
 			dirs: []
 		}
+		//console.log("getdirs",data);
 		commit(types.GET_DIRS, datanew)
 		if (!data) {
 			throw new Error('服务器出错！')

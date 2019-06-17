@@ -1025,8 +1025,9 @@ resp{
 //查询某一天的数据;
 req{
 	“type”:25（int型）
+    “level”:””   //String类型 内容分别是：ALL, TRACE, DEBUG, INFO, ERROR, FATAL
     “startTime”:””		//格式为2019-03-14
-“endTime”:””		//格式为2019-03-14
+    “endTime”:””		//格式为2019-03-14
 
 }
 resp{

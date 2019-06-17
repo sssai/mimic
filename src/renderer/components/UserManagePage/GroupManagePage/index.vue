@@ -41,12 +41,12 @@
           size="small">
           删除
         </el-button>
-        <el-button
+<!--         <el-button
           @click.native.prevent="RenameGroup(scope.$index, tableData1)"
           type="text"
           size="small">
           重命名
-        </el-button>
+        </el-button> -->
       </template>
     </el-table-column>
     </el-table>
@@ -447,6 +447,7 @@ export default {
 
 
   }
+
 </script>
 
 <style>

@@ -47,8 +47,8 @@ export async function submitAuth(param) {
 
 export async function DeleteDirs(idArray,dirNameArray) {
 	try {
-		console.log(idArray)
-		console.log(dirNameArray)
+		// console.log(idArray)
+		// console.log(dirNameArray)
 		for (let i = 0; i < idArray.length; i++) {
 			await deletedirsHelper(idArray[i],dirNameArray[i])
 		}
@@ -60,7 +60,8 @@ export async function DeleteDirs(idArray,dirNameArray) {
 
 async function deletedirsHelper(id,dirName){
 	try {
-
+        console.log("删除")
+        //return true
 		let socket = new Socket()
 		let data = {
 			type: 31,
@@ -165,7 +166,29 @@ export async function DeleteUserFromGroup(User,Group) {
 export async function GetDirs(param) {
 	try {
 
-
+        let trydata={
+        	pageSize:"10",
+        	currentPage:"1",
+        	total:"15",
+        	userDir:[
+        		{
+        			id:"5555",
+        			dirName:"666666",
+        			user:"fff",
+        			group:"222",
+        			auth:"20",
+        		},
+        		{
+        			id:"4444",
+        			dirName:"77777",
+        			user:"fff",
+        			group:"222",
+        			auth:"20",
+        		}
+        	]
+        }
+        console.log("查询")
+        //return trydata
 		let socket = new Socket()
 		let data = {
 			type: 32,

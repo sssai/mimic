@@ -118,6 +118,7 @@ export default {
           })
       })
       let d = this.$store.getters.getDirs
+      console.log(55,d)
       this.dirs = d.userDir
       this.total = +d.total
       this.pageSize= +d.pageSize
@@ -184,8 +185,7 @@ export default {
       for (let i = 0; i < this.multipleSelection.length; i++) {
         dirNameArray.push(this.multipleSelection[i].dirName)
       }
-      // console.log(username)
-      // console.log(id)
+      console.log(dirNameArray)
 
       // TODO 返回结果的处理
       this.$store

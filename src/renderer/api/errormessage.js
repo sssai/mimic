@@ -90,7 +90,7 @@ export async function GetRecentLog(param) {
 		socket.write(JSON.stringify(data))
 
 		let response = await socket.read()
-		//console.log('MDFS24',response)
+		console.log('MDFS24',response)
 		let obj = JSON.parse(response)
 		// TODO 后台返回的结果缺少表示错误的字段，state and errormessage
 		if (obj.state == 0|| obj.type !=64) {
@@ -113,12 +113,13 @@ export async function GetRecentLog(param) {
  * @return  {Boolean}        true为正确提交，报错则不正确
  * @description 按照时间查询日志信息
  */
-export async function GetLogByTime(startTime,endTime,pageSize,currentPage) {
+export async function GetLogByTime(level,startTime,endTime,pageSize,currentPage) {
 	try {        
 
 		let socket = new Socket()
 		let data = {
 			type: type.GRT_LOG_BY_TIME,
+			level:level,
 			startTime: startTime,
 			endTime:endTime,
 			pageSize:pageSize,

@@ -18,26 +18,20 @@
                   style="margin-bottom:15px;">
                 </el-date-picker>
     </el-col>
-    <el-button icon="el-icon-search" @click="getlogInfo()" style="position:absolute;left:355px;"></el-button> 
-  </el-row>
-<!-- 
-   <div style="margin-top: 15px; margin-bottom:10px;">
-    <el-col :span="15" inline>
-              <el-date-picker
-                  v-model="timevalue"
-                  value-format="yyyy-MM-dd"
-                  type="daterange"
-                  align="right"
-                  unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  :picker-options="pickerOptions2"
-                  style="margin-bottom:15px;">
-                </el-date-picker>
+    <el-col>
+        <el-select v-model="levelvalue" placeholder="可选择日志类型" style="left:-58px">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            :change="levelvalueChange()">
+          </el-option>
+        </el-select>
     </el-col>
-    <el-button icon="el-icon-search" @click="getlogInfo()" style="position:absolute;left:515px;"></el-button> 
-   </div> -->
+    <el-button icon="el-icon-search" @click="getlogInfo()" style="position:absolute;left:580px;"></el-button> 
+  </el-row>
+
 
   <el-table
     stripe
@@ -68,12 +62,26 @@
       prop="logThreadId">
     </el-table-column>
 
-    <el-table-column
+<!--     <el-table-column
       label="日志类型"
       align="center"
       prop="logLevel"
       width="160">
-    </el-table-column> 
+    </el-table-column>  -->
+
+    <el-table-column
+      prop="logLevel"
+      label="日志类型"
+      width="100"
+      :filters="[{ text: 'TRACE', value: 'TRACE' }, { text: 'DEBUG', value: 'DEBUG' },{ text: 'INFO', value: 'INFO' },{ text: 'ERROR', value: 'ERROR' },{ text: 'FATAL', value: 'FATAL' },]"
+      :filter-method="filterTag"
+      >
+<!--       <template slot-scope="scope">
+        <el-tag
+          :type='primary'
+          disable-transitions>{{scope.row.logLevel}}</el-tag>
+      </template> -->
+    </el-table-column>
 
     <el-table-column
       label="对应级别"
@@ -140,10 +148,31 @@ export default {
         timer:null,
       	      	//表内数据
         tableData1: [], //
+        startTime:'',
+        endTime:'',
         total:0,
         currentPage:1,
         pageSize:20,
-
+        options: [ {
+          value: 'ALL',
+          label: 'ALL'
+        },{
+          value: 'TRACE',
+          label: 'TRACE'
+        }, {
+          value: 'DEBUG',
+          label: 'DEBUG'
+        }, {
+          value: 'INFO',
+          label: 'INFO'
+        }, {
+          value: 'ERROR',
+          label: 'ERROR'
+        }, {
+          value: 'FATAL',
+          label: 'FATAL'
+        }],
+        levelvalue: '',
         timevalue:'',
 
         pickerOptions2: {
@@ -206,24 +235,48 @@ methods: {
 
         this.currentPage= val
         this.pageSize= 10
-
-        let startTime = this.timevalue[0] + ' 00:00:00'
-        let endTime = this.timevalue[1] +' 23:59:59'
-        let tableData= await errormessage.GetLogByTime(startTime,endTime,this.pageSize,this.currentPage)
+        var startTime=''
+        var endTime=''
+        if(this.timevalue){
+           startTime = this.timevalue[0] + ' 00:00:00'
+           endTime = this.timevalue[1] +' 23:59:59'
+        }
+        let tableData= await errormessage.GetLogByTime(this.levelvalue,startTime,endTime,this.pageSize,this.currentPage)
+         
         this.tableData1 = tableData.logInfo
         this.currentPage= +tableData.currentPage
         this.total= +tableData.total
     
     },
     async getlogInfo(){
-        let startTime = this.timevalue[0] + ' 00:00:00'
-        let endTime = this.timevalue[1] +' 23:59:59'
-        this.pageSize= 10
-        let tableData= await errormessage.GetLogByTime(startTime,endTime,this.pageSize,this.currentPage)
-        this.tableData1 = tableData.logInfo
-        this.currentPage= +tableData.currentPage
-        this.total= +tableData.total
-    }
+      if(this.timevalue||this.levelvalue){
+        var startTime=''
+        var endTime=''
+          if(this.timevalue){
+              startTime = this.timevalue[0] + ' 00:00:00'
+              endTime = this.timevalue[1] +' 23:59:59'
+          }
+          this.pageSize= 10
+          let tableData= await errormessage.GetLogByTime(this.levelvalue,startTime,endTime,this.pageSize,this.currentPage)
+          this.tableData1 = tableData.logInfo
+          this.currentPage= +tableData.currentPage
+          this.total= +tableData.total        
+      }
+
+    },
+
+     filterTag(value, row) {
+        //console.log(value)
+        if(row.logLevel == value){
+          
+        }
+        console.log(value+row.logLevel)
+
+        return row.logLevel === value;
+      },
+      levelvalueChange(){
+        console.log(this.levelvalue)
+      }
 
 
 	}
